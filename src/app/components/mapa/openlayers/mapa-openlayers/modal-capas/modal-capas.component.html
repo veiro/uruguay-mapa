@@ -1,0 +1,40 @@
+<ion-header translucent>
+    <ion-toolbar>
+      <ion-title>Capas del mapa</ion-title>
+      <ion-buttons slot="end">
+        <ion-button *ngIf="aplicarCambios" (click)="closeModal()">Aplicar</ion-button>
+        <ion-button *ngIf="!aplicarCambios" (click)="closeModal()">Cerrar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content fullscreen>
+    <ion-item-group>
+
+        <ion-item-divider>
+          <h3>Principales</h3>
+        </ion-item-divider>
+      
+        <ion-item>
+          <ion-label>Mapa correo</ion-label>
+          <ion-checkbox [(ngModel)]="checkMapaCorreo" (click)="desMarcarGoogle()" ></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Mapa google</ion-label>
+          <ion-checkbox [(ngModel)]="checkMapaGoogle" (click)="desMarcarCorreo()" ></ion-checkbox>
+        </ion-item>
+    </ion-item-group>
+
+
+    <ion-item-group>
+        <ion-item-divider>
+          <h3>Secundarias</h3>
+        </ion-item-divider>
+      
+        <ion-item>
+            <ion-label>Padrones </ion-label>
+            <ion-checkbox [(ngModel)]="checkPadron" (click)="mostrarApicarCambios()" ></ion-checkbox>
+        </ion-item>
+     
+        
+    </ion-item-group>
+  </ion-content>

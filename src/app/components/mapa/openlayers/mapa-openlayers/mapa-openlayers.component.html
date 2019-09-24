@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="padding: 0px 0px;"> Mapa Openlayers</ion-title>
+  </ion-toolbar>
+</ion-header>
+<div id="map">
+  
+</div>
+ <div #popup>
+    <app-overlay-message
+     [puntoMensaje]='puntoOverlayMensaje'
+     (eventoCerrarPopUp)="cerrarPopUp($event)"
+     ></app-overlay-message>
+</div>
+<div #popupAcciones>
+     <pop-up-opciones
+     (eventoCerrarPopUp)="cerrarPopUpAcciones($event)"
+     ></pop-up-opciones>
+</div>
+
+<div class="ubicacion-icono-google">
+  <ion-icon name="logo-buffer" color="light" class="iconoUbicacion" (click)="mostrarMenu()"></ion-icon>
+</div>
+
+<div id="ubicacion" [ngClass]="{'ubicacion': !checkLocalizar,'ubicacionSeleccionado': checkLocalizar }">
+  <ion-icon name="locate" color="light" class="iconoUbicacion" (click)="centrarEnUbicacion()"></ion-icon>
+</div>
+
+
