@@ -1,7 +1,6 @@
 uruguay-mapa
 ---------
-
--- Como ejecutar?
+## Como ejecutar?
 Comandos:
 1. Instalar paquetes
 ```
@@ -15,5 +14,5 @@ npm start
 Acceder a la url http://localhost:4200/
 
 
--- Tareas
+##  Tareas
 https://trello.com/b/ybtDfbPd/uruguay-mapa
