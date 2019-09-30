@@ -1,4 +1,4 @@
-import { PuntoMapa } from '../../../../../model/punto-mapa';
+import { PuntoMapa } from '../../../model/punto-mapa';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 

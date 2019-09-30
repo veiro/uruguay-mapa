@@ -1,51 +1,83 @@
-import { OverlayMensaje, OverlayMessageComponent } from './overlay-message/overlay-message.component';
+// General Imports
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { ModalController } from '@ionic/angular';
+
+// Open Layers
 import Overlay from 'ol/Overlay.js';
-//import { PuntoMapa } from 'src/app/model/punto-mapa';
-import { MapaService } from './../../../../services/mapa/mapa.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
 import Map from 'ol/Map';
 import View from 'ol/View';
-import {ScaleLine, defaults as defaultControls, ZoomSlider, Geolocate} from 'ol/control.js';
+import { ScaleLine, defaults as defaultControls, ZoomSlider } from 'ol/control.js';
 import TileLayer from 'ol/layer/Tile';
 import Feature from 'ol/Feature';
 import { fromLonLat } from 'ol/proj.js';
 import { transform } from 'ol/proj.js';
-import {OSM, Vector} from 'ol/source';
+import { Vector } from 'ol/source';
 import * as source from 'ol/source';
 import * as geom from 'ol/geom';
 import VectorLayer from 'ol/layer/Vector';
 import * as style from 'ol/style';
-import TileWms from 'ol/source/TileWMS';
-import * as layer from 'ol/layer';
-import { ToastService } from 'src/app/services/toast/ToastService';
-import XYZ from 'ol/source/XYZ.js';
 import AnimatedCluster from 'ol-ext/layer/AnimatedCluster';
-import SelectCluster from 'ol-ext/interaction/SelectCluster';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+// Layers
+import * as Layers from './layers';
+
+// Homemade Components
+import { OverlayMensaje, OverlayMessageComponent } from './overlay-message/overlay-message.component';
 import { PopUpOpcionesComponent } from './pop-up-opciones/pop-up-opciones.component';
-import GeolocationOl from 'ol/Geolocation';
-import { MenuController, ModalController } from '@ionic/angular';
 import { ModalCapas } from './modal-capas/modal-capas.component';
 import { Informacion, ModalClusterComponent } from './modal-cluster/modal-cluster.component';
 
+// Models
+// import { PuntoMapa } from 'src/app/model/punto-mapa';
+
+// Services
+import { MapaService } from './../../services/mapa/mapa.service';
+import { ToastService } from 'src/app/services/toast/ToastService';
 
 @Component({
   selector: 'app-mapa-openlayers',
   templateUrl: './mapa-openlayers.component.html',
   styleUrls: ['./mapa-openlayers.component.css'],
 })
-export class MapaOpenlayersComponent implements OnInit {
+
+export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('map') map: Map;
   @ViewChild(OverlayMessageComponent) _overlayMessageComponent: OverlayMessageComponent;
   @ViewChild(PopUpOpcionesComponent) popUpOpcionesComponent: PopUpOpcionesComponent;
   @ViewChild('popupAcciones') popupAcciones: any;
   @ViewChild('popup') popup: any;
 
+  // Input Parameters
+  @Input() centerCoordinates = {latitude: -32.659237, longitude: -56.082402};
+  @Input() centerInDeviceLocation = true;
+  @Input() initialZoom = 7;
+  @Input() showDeviceLocation = true;
+  @Input() showLayerElCorreo = true;
+  @Input() showLayerGoogleMaps = true;
+  @Input() showLayerOSM = true;
+  @Input() showLayerPadrones = true;
+
+  // Layers
+  layerDeviceLocation = Layers.layerDeviceLocation;
+  layerMapaElCorreo = Layers.LayerMapaElCorreo;
+  layerMapaGoogleMaps =  Layers.LayerMapaGoogleMaps;
+  layerOSM =  Layers.LayerOSM;
+  layerPadrones = Layers.LayerPadrones;
+
+  // Visible Layers
+  checkMapaCorreo = this.showLayerElCorreo;
+  checkMapaOSM = !this.showLayerElCorreo && this.showLayerOSM;
+  checkMapaGoogle = !this.showLayerElCorreo && !this.showLayerOSM && this.showLayerGoogleMaps;
+  checkPadron = false;
+
+  // Subscriptions
+  watchCurrentPosition: any;
+
+  // To Review
   puntosMapaObra: Array<any>;
   puntosMapaIndustria: Array<any>;
   capaActual: TileLayer;
-  capaPadrones: any;
-
   geolocation: any;
   puntoOverlayMensaje: OverlayMensaje = new OverlayMensaje();
   informacion: Informacion = new Informacion();
@@ -54,189 +86,179 @@ export class MapaOpenlayersComponent implements OnInit {
   overlayPopUPAcciones: any;
   popupClusterOVerlay: any;
   checkLocalizar = false;
-  positionLayer: any;
   clusterSource: any;
   view: any;
   popUpAbierto = false;
   ubicacion: Coordinates;
   markerVectorLayerPosicionSeleccionada: any;
-  markerVectorLayerPosicionActual: any;
-  watchCurrentPostition: any;
 
-  checkPadron = false;
-  checkMapaGoogle = false;
-  checkMaparaCorreo = true;
-  layerGoogleMaps = null;
-  layerMapaCorreo = null;
-  capaPadronesSource: any;
-
-  constructor( public _mapService: MapaService,
-               private _toast: ToastService,
-               private _geolocation: Geolocation,
-               public _modalController: ModalController) { }
+  constructor (
+      public _mapService: MapaService,
+      private _toast: ToastService,
+      private _geolocation: Geolocation,
+      public _modalController: ModalController
+  ) {
+    console.log('[mapa-openlayers.component.ts] - constructor | Start');
+  }
 
   ngOnInit() {
+    console.log('[mapa-openlayers.component.ts] - ngOnInit | Start');
+    // ToDo: Habría que sacar del then los métodos que iniializan el mapa, y resolver de otra forma la muestra de la posición del usuario.
+    // ToDo: Se se hace eso, si falla la obtanción de la ubicación, el resto anda igual.
     this._geolocation.getCurrentPosition().then((resp) => {
       this.ubicacion = resp.coords;
-      this.iniciarMapa();
-      this.mostrarLayerMapaBase();
-      this.mostrarLayerPadrones();
+      this.initMap();
+      this.showSelectedLayers();
       this.agregarMarcadorPosicionActual();
-      //this.obtenerPuntosObras();
+
       this.obtenerPuntosIndustria();
       this.agregarEventoOnclickConPopUp();
-     }).catch((error) => {
-       console.log('Error getting location', error);
-     });
+
+      // Workaround to show map in the first render
+      const that = this;
+      setTimeout(function() { that.map.updateSize(); }, 100);
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
 
-  mostrarLayerMapaBase() {
-    if (this.checkMapaGoogle) {
-      this.layerMapaCorreo.setVisible(false);
-      this.layerGoogleMaps.setVisible(true);
-    } else if (this.checkMaparaCorreo) {
-      this.layerMapaCorreo.setVisible(true);
-      this.layerGoogleMaps.setVisible(false);
-    }
+  ngAfterViewInit() {
+    console.log('[mapa-openlayers.component.ts] - ngAfterViewInit | Start');
   }
 
-  mostrarLayerPadrones() {
-    this.capaPadrones.setVisible(this.checkPadron);
+  ngOnDestroy() {
+    console.log('[mapa-openlayers.component.ts] - ngOnDestroy | Start');
+    // ToDo: Ver si hay alguna otra subscripción para remover.
+    this.watchCurrentPosition.unsubscribe();
   }
 
-
-  iniciarMapa() {
-    this.layerGoogleMaps =  new TileLayer({
-      source: new XYZ({
-        url: 'http://maps.googleapis.com/maps/vt/lyrs=r&x={x}&y={y}&z={z}'
-      })
-    });
-
-    this.layerMapaCorreo = new TileLayer({
-        source: new TileWms({
-          url: "http://geo.correo.com.uy/geoserver/wms",
-          params: {
-            layers: 'visualizador:paises_puntos,visualizador:paises_sudamerica,visualizador:mb2_paises_sudamerica,visualizador:mb2_oceanos_sudamerica,visualizador:provincias_sudamerica,visualizador:mb2_uy_departamentos,visualizador:mb2_uy_localidades_ine,visualizador:rios_sudamerica,visualizador:mb2_waterways,visualizador:mb2_hidro_sin_rp,visualizador:mb2_hidro_ln,visualizador:mb2_lim_adm,visualizador:mojones_uy,visualizador:mb2_landuse,visualizador:mb2_natural,visualizador:mb2_buildings,visualizador:mb2_roads,visualizador:mb2_railways,visualizador:mb2_places',
-            format: 'image/png',
-            SRS:"EPSG:900913"
-          }
-        })
-      },
-    );
-
-    this.capaPadronesSource = new TileWms({
-      url: "http://geoservicios.mtop.gub.uy/geoserver/planos_uy/wms",
-      params: {
-        layers: 'parcelario_urbano,parcelario_rural',
-        format: 'image/png'
-      }
-    });
-
-    
-    this.capaPadrones = new TileLayer({
-      source: this.capaPadronesSource,
-      opacity: 0.5
-    });
+  initMap() {
+    console.log('[mapa-openlayers.component.ts] - initMap | Start');
+    const layers = this.loadLayers();
+    const center = this.loadCenter();
 
     this.view = new View({
       projection: 'EPSG:900913',
-      center:  fromLonLat([this.ubicacion.longitude, this.ubicacion.latitude]),
-      zoom: 15
+      center,
+      zoom: this.initialZoom
     });
 
     this.map = new Map({
       target: 'map',
       controls: defaultControls().extend([
-        new ScaleLine(),
+        new ScaleLine(), // ToDo: Parametrizar los controles que se quieren agregar al mapa
         new ZoomSlider()
       ]),
-      layers: [
-       this.layerGoogleMaps,
-       this.layerMapaCorreo,
-       this.capaPadrones
-      ],
+      layers,
       view: this.view
     });
   }
 
-  iniciarMapaOSM() {
-    this.map = new Map({
-      target: 'map',
-      controls: defaultControls().extend([
-        new ScaleLine(),
-        new ZoomSlider()
-      ]),
-      layers: [
-        new TileLayer({
-          source:  new OSM()
-        },
-        )
-      ],
-      view: new View({
-        projection: 'EPSG:900913',
-        center:  fromLonLat([-56.158966, -34.884448]),
-        zoom: 15
-      })
-    });
+  loadLayers(): any[] {
+    console.log('[mapa-openlayers.component.ts] - loadLayers | Start');
+    const layers = [];
+
+    if (this.showLayerElCorreo) {
+      layers.push(this.layerMapaElCorreo);
+    }
+    if (this.showLayerGoogleMaps) {
+      layers.push(this.layerMapaGoogleMaps);
+    }
+    if (this.showLayerOSM) {
+      layers.push(this.layerOSM);
+    }
+    if (this.showDeviceLocation) {
+      layers.push(this.layerDeviceLocation);
+    }
+    if (this.showLayerPadrones) {
+      layers.push(this.layerPadrones);
+    }
+
+    return layers;
+  }
+
+  loadCenter() {
+    console.log('[mapa-openlayers.component.ts] - loadCenter | Start');
+    let latitude = 0;
+    let longitude = 0;
+
+    if (this.centerInDeviceLocation) {
+      latitude = this.ubicacion.latitude;
+    } else if (this.centerCoordinates && this.centerCoordinates.latitude) {
+      latitude = this.centerCoordinates.latitude;
+    }
+
+    if (this.centerInDeviceLocation) {
+      longitude = this.ubicacion.longitude;
+    } else if (this.centerCoordinates && this.centerCoordinates.longitude) {
+      longitude = this.centerCoordinates.longitude;
+    }
+
+    return fromLonLat([longitude, latitude]);
+  }
+
+  showSelectedLayers() {
+    console.log('[mapa-openlayers.component.ts] - showSelectedLayers | Start');
+    this.showBaseLayer();
+    this.showInformativeLayers();
+  }
+
+  showBaseLayer() {
+    console.log('[mapa-openlayers.component.ts] - showBaseLayer | Start');
+    if (this.checkMapaCorreo) {
+      this.layerMapaElCorreo.setVisible(true);
+      this.layerOSM.setVisible(false);
+      this.layerMapaGoogleMaps.setVisible(false);
+    } else if (this.checkMapaOSM) {
+      this.layerMapaElCorreo.setVisible(false);
+      this.layerOSM.setVisible(true);
+      this.layerMapaGoogleMaps.setVisible(false);
+    } else if (this.checkMapaGoogle) {
+      this.layerMapaElCorreo.setVisible(false);
+      this.layerOSM.setVisible(false);
+      this.layerMapaGoogleMaps.setVisible(true);
+    }
+  }
+
+  showInformativeLayers() {
+    console.log('[mapa-openlayers.component.ts] - showInformativeLayers | Start');
+    this.layerPadrones.setVisible(this.checkPadron);
   }
 
   agregarMarcadorPosicionActual()  {
-
-    this.map.removeLayer(this.markerVectorLayerPosicionActual);
-
-    let featuresPoint: Feature[];
-     featuresPoint = [];
-
-    var iconStyle = new style.Style({
-      image: new style.Circle({
-        radius: 6,
-        fill: new style.Fill({
-          color: '#3399CC'
-        }),
-        stroke: new style.Stroke({
-          color: '#fff',
-          width: 2
+    console.log('[mapa-openlayers.component.ts] - agregarMarcadorPosicionActual | Start');
+    if (this.showDeviceLocation) {
+      this.layerDeviceLocation.getSource().clear();
+      const userLocationIconStyle = new style.Style({
+        image: new style.Circle({
+          radius: 6,
+          fill: new style.Fill({
+            color: '#3399CC'
+          }),
+          stroke: new style.Stroke({
+            color: '#fff',
+            width: 2
+          })
         })
-      })
-    });
+      });
+      const userLocation = new Feature({
+        geometry: new geom.Point(fromLonLat([this.ubicacion.longitude, this.ubicacion.latitude]))
+      });
+      userLocation.setStyle(userLocationIconStyle);
+      this.layerDeviceLocation.getSource().addFeature(userLocation);
 
-
-    var punto = new Feature({
-      geometry: new geom.Point(fromLonLat([this.ubicacion.longitude, this.ubicacion.latitude])),
-      style: iconStyle
-    });
-
-    punto.setStyle(iconStyle);
-    featuresPoint.push(punto);
-
-    let markers = new Vector({
-      features: featuresPoint
-    });
-
-    this.markerVectorLayerPosicionActual = new VectorLayer({
-      source: markers,
-    });
-
-    this.map.addLayer(this.markerVectorLayerPosicionActual);
-
-    // lo dejo escuchando los cambios de la ubicacion, asi los dibuja.
-    this.watchCurrentPostition = this._geolocation.watchPosition().subscribe((data) => {
-      this.ubicacion = data.coords;
-      this.agregarMarcadorPosicionActual();
-    });
+      // Lo dejo escuchando los cambios de la ubicacion, asi los dibuja.
+      if (!this.watchCurrentPosition) {
+        this.watchCurrentPosition = this._geolocation.watchPosition().subscribe((data) => {
+          this.ubicacion = data.coords;
+          this.agregarMarcadorPosicionActual();
+        });
+      }
+    }
   }
 
-  // obtenerPuntosObras() {
-  //   this._mapService.obtenerPuntosObra().subscribe(
-  //       response => {
-  //       this.puntosMapaObra = this._procesarRespuesta.response(response);
-  //       this.agregarCapaPuntosObra();
-  //     },
-  //       error => {
-  //         this._toast.pushError("Error al obtener puntos de Construción");
-  //       }
-  //     );
-  // }
+
+
 
   obtenerPuntosIndustria() {
     this._mapService.obtenerPuntosIndustria().subscribe(
@@ -245,7 +267,7 @@ export class MapaOpenlayersComponent implements OnInit {
       this.agregarCapaPuntosIndustria();
     },
       error => {
-        this._toast.pushError("Error al obtener puntos de Industria y Comercio");
+        this._toast.pushError('Error al obtener puntos de Industria y Comercio');
       }
     );
   }
@@ -254,7 +276,7 @@ export class MapaOpenlayersComponent implements OnInit {
     let featuresPoint: Feature[];
      featuresPoint = [];
 
-    var iconStyle = new style.Style({
+    const iconStyle = new style.Style({
       image: new style.Icon( ({
         anchor: [0.5, 46],
         anchorXUnits: 'fraction',
@@ -264,7 +286,7 @@ export class MapaOpenlayersComponent implements OnInit {
     });
 
     this.puntosMapaObra.forEach( x => {
-      var punto = new Feature({
+      const punto = new Feature({
         geometry: new geom.Point(fromLonLat([parseFloat(x.longitud), parseFloat(x.latitud)])),
         Tipo: x.tipoPunto,
         Obra: x.nroObra,
@@ -274,11 +296,11 @@ export class MapaOpenlayersComponent implements OnInit {
       featuresPoint.push( punto );
     });
 
-    let markers = new Vector({
+    const markers = new Vector({
       features: featuresPoint
     });
 
-    let markerVectorLayer = new VectorLayer({
+    const markerVectorLayer = new VectorLayer({
       source: markers,
 
   });
@@ -291,7 +313,7 @@ export class MapaOpenlayersComponent implements OnInit {
     featuresPoint = [];
 
     this.puntosMapaIndustria.forEach( x => {
-      var punto = new Feature({
+      const punto = new Feature({
         geometry: new geom.Point(fromLonLat([parseFloat(x.longitud), parseFloat(x.latitud)])),
         Tipo: x.tipoPunto,
         Denominacion: x.denominacion,
@@ -303,16 +325,15 @@ export class MapaOpenlayersComponent implements OnInit {
       featuresPoint.push( punto );
     });
 
-    let markers = new Vector({
+    const markers = new Vector({
       features: featuresPoint
     });
 
-    let markerVectorLayer = new VectorLayer({
-      source: markers,
+    const markerVectorLayer = new VectorLayer({
+      source: markers
+    });
 
-  });
     this.cluster(featuresPoint);
-
   }
 
   agregarEventoOnclickConPopUp() {
@@ -323,6 +344,7 @@ export class MapaOpenlayersComponent implements OnInit {
       stopEvent: false,
       offset: [0, -50]
     });
+
     this.map.addOverlay(this.overlayPopUP);
 
     // pop up para ver el modal de seleccion de capas
@@ -343,27 +365,23 @@ export class MapaOpenlayersComponent implements OnInit {
       this.overlayPopUPAcciones.setPosition(evt.coordinate);
       const puntoGoogle = transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 
-      //obtengo la url para consultar el padron
-      let urlConsutaPadron = this.capaPadronesSource.getGetFeatureInfoUrl(
+      // obtengo la url para consultar el padron
+      let urlConsutaPadron = this.layerPadrones.getSource().getGetFeatureInfoUrl(
         evt.coordinate, this.view.getResolution(), 'EPSG:3857',
         {'INFO_FORMAT': 'application/json'});
         urlConsutaPadron = urlConsutaPadron + '&QUERY_LAYERS=parcelario_urbano%2Cparcelario_rural';
 
       this.popUpOpcionesComponent.cargarPopUp(puntoGoogle, urlConsutaPadron);
       this.map.addOverlay(this.overlayPopUPAcciones);
-      
     });
 
     // display popup on click
     this.map.on('singleclick', (evt) => {
-      var sFeature = this.map.forEachFeatureAtPixel(evt.pixel,
-        sFeature => {
-          return sFeature;
-          });
-        
-      if (sFeature && sFeature.getProperties().features.length == 1) {
-        var featureSeleccionada = sFeature.getProperties().features[0];
-        var coordinates = featureSeleccionada.getGeometry().getCoordinates();
+      const sFeature = this.map.forEachFeatureAtPixel(evt.pixel, (_sFeature => _sFeature));
+
+      if (sFeature && sFeature.getProperties().features.length === 1) {
+        const featureSeleccionada = sFeature.getProperties().features[0];
+        const coordinates = featureSeleccionada.getGeometry().getCoordinates();
         this.map.getView().animate({center: coordinates, duration: 500});
         const id = sFeature.getId();
         const propiedades = featureSeleccionada.getProperties();
@@ -378,7 +396,6 @@ export class MapaOpenlayersComponent implements OnInit {
         // toco en un cluster
         this.informacion.puntos = sFeature.values_.features;
         this.mostrarModalCluster(this.informacion);
-
       }
     });
   }
@@ -393,15 +410,15 @@ export class MapaOpenlayersComponent implements OnInit {
     this.map.removeLayer(this.markerVectorLayerPosicionSeleccionada);
   }
 
-  cerrarPopUpCluster(){
+  cerrarPopUpCluster() {
     this.map.removeOverlay(this.popupClusterOVerlay);
   }
-  
+
   agregarMarcadorPosicionSeleccionada(coord)  {
     let featuresPoint: Feature[];
      featuresPoint = [];
 
-    var iconStyle =  new style.Style({
+    const iconStyle =  new style.Style({
       image: new style.Icon( ({
         anchor: [0.5, 46],
         anchorXUnits: 'fraction',
@@ -410,7 +427,7 @@ export class MapaOpenlayersComponent implements OnInit {
       }))
     });
 
-    var punto = new Feature({
+    const punto = new Feature({
       geometry: new geom.Point(coord),
       style: iconStyle
     });
@@ -418,7 +435,7 @@ export class MapaOpenlayersComponent implements OnInit {
     punto.setStyle(iconStyle);
     featuresPoint.push(punto);
 
-    let markers = new Vector({
+    const markers = new Vector({
       features: featuresPoint
     });
 
@@ -438,7 +455,7 @@ export class MapaOpenlayersComponent implements OnInit {
   }
 
   cluster(_features: Feature[]) {
-    var clusterSourcePoint = new source.Cluster({
+    const clusterSourcePoint = new source.Cluster({
       distance: 20,
       source: new source.Vector({
         features: _features
@@ -446,12 +463,12 @@ export class MapaOpenlayersComponent implements OnInit {
     });
 
     // Animated cluster layer
-    var styleCache = {};
+    const styleCache = {};
     function getStyle (feature) {
-      let size = feature.get('features').length;
+      const size = feature.get('features').length;
       let _style = styleCache[size];
-      var texto;
-      if (size == 1) {
+      let texto;
+      if (size === 1) {
          texto = new style.Text({
           text: ' ',
           fill: new style.Fill({
@@ -468,7 +485,7 @@ export class MapaOpenlayersComponent implements OnInit {
         });
       }
       if (!_style) {
-        var varcolor = '#42BF16';
+        const varcolor = '#42BF16';
         _style = styleCache[size] = new style.Style({
           image: new style.Circle({
             radius: 15,
@@ -487,7 +504,7 @@ export class MapaOpenlayersComponent implements OnInit {
     }
 
     // Animated cluster layer
-    var clusterLayer = new AnimatedCluster({
+    const clusterLayer = new AnimatedCluster({
       name: 'Cluster',
       source: clusterSourcePoint,
       animationDuration: 700,
@@ -496,32 +513,33 @@ export class MapaOpenlayersComponent implements OnInit {
 
 
     // Style for selection
-    var img = new style.Circle({
+    const img = new style.Circle({
       radius: 15,
       stroke: new style.Stroke({
-        color:"rgba(0,255,255,1)",
-        width:1
+        color: 'rgba(0,255,255,1)',
+        width: 1
       }),
       fill: new style.Fill({
-        color:"rgba(0,255,255,0.3)"
+        color: 'rgba(0,255,255,0.3)'
       })
     });
-    var style0 = new style.Style({
+    const style0 = new style.Style({
       image: img
     });
     this.map.addLayer(clusterLayer);
 
   }
 
-
   async mostrarMenu() {
     let modalCerrar = null;
+
     await this._modalController.create({
       component: ModalCapas,
-      componentProps:{
+      componentProps: {
         'inCheckPadron' : this.checkPadron,
         'inCheckMapaGoogle' : this.checkMapaGoogle,
-        'inCheckMapaCorreo' : this.checkMaparaCorreo
+        'inCheckMapaCorreo' : this.checkMapaCorreo,
+        'inCheckMapaOSM' : this.checkMapaOSM
       }
     }).then( modal => {
       modalCerrar = modal;
@@ -529,12 +547,12 @@ export class MapaOpenlayersComponent implements OnInit {
     });
 
     const  modalCerrado  = await modalCerrar.onWillDismiss();
-    this.checkPadron = modalCerrado.data.checkPadron;
+    this.checkMapaCorreo =  modalCerrado.data.checkMapaCorreo;
+    this.checkMapaOSM =  modalCerrado.data.checkMapaOSM;
     this.checkMapaGoogle = modalCerrado.data.checkMapaGoogle;
-    this.checkMaparaCorreo =  modalCerrado.data.checkMapaCorreo;
+    this.checkPadron = modalCerrado.data.checkPadron;
 
-    this.mostrarLayerPadrones();
-    this.mostrarLayerMapaBase();
+    this.showSelectedLayers();
   }
 
   async mostrarModalCluster(info: Informacion) {
@@ -551,5 +569,4 @@ export class MapaOpenlayersComponent implements OnInit {
 
     await modalCerrar.onWillDismiss();
   }
-
 }

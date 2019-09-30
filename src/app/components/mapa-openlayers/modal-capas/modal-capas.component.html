@@ -16,11 +16,15 @@
       
         <ion-item>
           <ion-label>Mapa correo</ion-label>
-          <ion-checkbox [(ngModel)]="checkMapaCorreo" (click)="desMarcarGoogle()" ></ion-checkbox>
+          <ion-checkbox [(ngModel)]="checkMapaCorreo" (click)="marcarCapaBase('CORREO')" ></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>Mapa OSM</ion-label>
+            <ion-checkbox [(ngModel)]="checkMapaOSM" (click)="marcarCapaBase('OSM')" ></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Mapa google</ion-label>
-          <ion-checkbox [(ngModel)]="checkMapaGoogle" (click)="desMarcarCorreo()" ></ion-checkbox>
+          <ion-checkbox [(ngModel)]="checkMapaGoogle" (click)="marcarCapaBase('GOOGLE')" ></ion-checkbox>
         </ion-item>
     </ion-item-group>
 

@@ -33,7 +33,6 @@ export class PopUpOpcionesComponent implements OnInit {
   }
 
   buscarObrasPorPadron() {
-   
   }
 
 }
