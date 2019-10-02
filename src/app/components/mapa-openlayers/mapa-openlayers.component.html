@@ -13,7 +13,7 @@
     ></pop-up-opciones>
 </div>
 
-<div class="ubicacion-icono-google">
+<div class="ubicacion-icono-google" [ngClass]="{'displayNone': !this.showLayersSelector}">
     <ion-icon
             name="logo-buffer"
             color="light"
@@ -22,7 +22,7 @@
     ></ion-icon>
 </div>
 
-<div id="ubicacion" [ngClass]="{'ubicacion': !checkLocalizar,'ubicacionSeleccionado': checkLocalizar }">
+<div id="ubicacion" [ngClass]="{'ubicacion': !checkLocalizar, 'ubicacionSeleccionado': checkLocalizar, 'displayNone': !this.showUserLocationButton}">
     <ion-icon
             name="locate"
             color="light"

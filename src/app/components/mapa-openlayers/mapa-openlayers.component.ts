@@ -7,7 +7,7 @@ import { ModalController } from '@ionic/angular';
 import Overlay from 'ol/Overlay.js';
 import Map from 'ol/Map';
 import View from 'ol/View';
-import { ScaleLine, defaults as defaultControls, ZoomSlider } from 'ol/control.js';
+import { ScaleLine, Zoom, ZoomSlider } from 'ol/control.js';
 import TileLayer from 'ol/layer/Tile';
 import Feature from 'ol/Feature';
 import { fromLonLat } from 'ol/proj.js';
@@ -57,6 +57,11 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
   @Input() showLayerGoogleMaps = true;
   @Input() showLayerOSM = true;
   @Input() showLayerPadrones = true;
+  @Input() showLayersSelector = true;
+  @Input() showScaleLine = true;
+  @Input() showUserLocationButton = true;
+  @Input() showZoom = true;
+  @Input() showZoomSlider = true;
 
   // Layers
   layerDeviceLocation = Layers.layerDeviceLocation;
@@ -116,7 +121,7 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
 
       // Workaround to show map in the first render
       const that = this;
-      setTimeout(function() { that.map.updateSize(); }, 100);
+      setTimeout(function() { that.map.updateSize(); }, 300);
     }).catch((error) => {
       console.log('Error getting location', error);
     });
@@ -136,6 +141,7 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
     console.log('[mapa-openlayers.component.ts] - initMap | Start');
     const layers = this.loadLayers();
     const center = this.loadCenter();
+    const controls = this.loadControls();
 
     this.view = new View({
       projection: 'EPSG:900913',
@@ -145,10 +151,7 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.map = new Map({
       target: 'map',
-      controls: defaultControls().extend([
-        new ScaleLine(), // ToDo: Parametrizar los controles que se quieren agregar al mapa
-        new ZoomSlider()
-      ]),
+      controls: controls,
       layers,
       view: this.view
     });
@@ -195,6 +198,22 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     return fromLonLat([longitude, latitude]);
+  }
+
+  loadControls() {
+    const controls = [];
+
+    if (this.showScaleLine) {
+      controls.push(new ScaleLine());
+    }
+    if (this.showZoom) {
+      controls.push(new Zoom());
+    }
+    if (this.showZoomSlider) {
+      controls.push(new ZoomSlider());
+    }
+
+    return controls;
   }
 
   showSelectedLayers() {
