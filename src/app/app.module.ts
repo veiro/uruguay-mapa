@@ -19,22 +19,19 @@ import { CookieService } from 'ng2-cookies';
 import { PopUpOpcionesComponent } from './components/mapa-openlayers/pop-up-opciones/pop-up-opciones.component';
 import { ModalCapas } from './components/mapa-openlayers/modal-capas/modal-capas.component';
 import { ModalClusterComponent } from './components/mapa-openlayers/modal-cluster/modal-cluster.component';
+import { MapaUruguay } from './components/mapa-openlayers/mapa-opernlayers.module';
+import { LlamadoNpmCompiladoCompnent } from './llamado-npm-compilado/llamado-npm-compilado.component';
 
 @NgModule({
   declarations: [
       AppComponent,
-      MapaOpenlayersComponent,
-      LandingComponent,
-      OverlayMessageComponent,
-      PopUpOpcionesComponent,
-      ModalClusterComponent,
-      ModalCapas
+      LlamadoNpmCompiladoCompnent
   ],
   entryComponents: [
-      ModalCapas,
-      ModalClusterComponent
+
   ],
   imports: [
+      MapaUruguay,
       BrowserModule,
       FormsModule,
       IonicModule.forRoot(),
@@ -43,10 +40,6 @@ import { ModalClusterComponent } from './components/mapa-openlayers/modal-cluste
       HttpClientModule
   ],
   providers: [
-      Geolocation,
-      CookieService,
-      MapaService,
-      ToastService,
       StatusBar,
       SplashScreen,
       {

@@ -1,16 +1,18 @@
 {
   "name": "uruguay-mapa",
   "version": "0.0.1",
-  "author": "Andres Veiro",
-  "homepage": "http://ionicframework.com/",
+  "description": "An example module",
+  "author": "Bruno Diaz, Andres Veiro",
+  "homepage": "https://github.com/veiro/uruguay-mapa",
+  "main": "dist/index.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
     "prod": "ionic build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build": "del dist && tsc"
   },
   "private": true,
   "dependencies": {
@@ -90,5 +92,11 @@
     "platforms": [
       "android"
     ]
-  }
+  },
+  "keywords": [
+    "angular2",
+    "library",
+    "mapa de uruguay"
+  ],
+  "license": "MIT"
 }
