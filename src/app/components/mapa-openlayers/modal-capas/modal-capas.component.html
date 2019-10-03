@@ -15,15 +15,19 @@
         </ion-item-divider>
       
         <ion-item>
-          <ion-label>Mapa correo</ion-label>
+          <ion-label>Mapa El Correo</ion-label>
           <ion-checkbox [(ngModel)]="checkMapaCorreo" (click)="marcarCapaBase('CORREO')" ></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>Mapa IDEUY</ion-label>
+            <ion-checkbox [(ngModel)]="checkMapaIDEUY" (click)="marcarCapaBase('IDEUY')" ></ion-checkbox>
         </ion-item>
         <ion-item>
             <ion-label>Mapa OSM</ion-label>
             <ion-checkbox [(ngModel)]="checkMapaOSM" (click)="marcarCapaBase('OSM')" ></ion-checkbox>
         </ion-item>
         <ion-item>
-          <ion-label>Mapa google</ion-label>
+          <ion-label>Mapa Google</ion-label>
           <ion-checkbox [(ngModel)]="checkMapaGoogle" (click)="marcarCapaBase('GOOGLE')" ></ion-checkbox>
         </ion-item>
     </ion-item-group>

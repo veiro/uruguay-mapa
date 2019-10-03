@@ -13,11 +13,13 @@ export class ModalCapas implements OnInit {
 
   @Input() inCheckPadron: boolean;
   @Input() inCheckMapaCorreo: boolean;
+  @Input() inCheckMapaIDEUY: boolean;
   @Input() inCheckMapaOSM: boolean;
   @Input() inCheckMapaGoogle: boolean;
 
   checkPadron: boolean;
   checkMapaCorreo: boolean;
+  checkMapaIDEUY: boolean;
   checkMapaOSM: boolean;
   checkMapaGoogle: boolean;
 
@@ -26,6 +28,7 @@ export class ModalCapas implements OnInit {
   ngOnInit() {
     this.checkPadron = this.inCheckPadron;
     this.checkMapaCorreo = this.inCheckMapaCorreo;
+    this.checkMapaIDEUY = this.inCheckMapaIDEUY;
     this.checkMapaOSM = this.inCheckMapaOSM;
     this.checkMapaGoogle = this.inCheckMapaGoogle;
   }
@@ -35,6 +38,7 @@ export class ModalCapas implements OnInit {
       'dismissed': true,
       'checkPadron' : this.checkPadron,
       'checkMapaCorreo' :  this.checkMapaCorreo,
+      'checkMapaIDEUY' :  this.checkMapaIDEUY,
       'checkMapaOSM' :  this.checkMapaOSM,
       'checkMapaGoogle' : this.checkMapaGoogle
     });
@@ -47,15 +51,23 @@ export class ModalCapas implements OnInit {
   marcarCapaBase(capa) {
     switch (capa) {
       case 'CORREO':
+        this.checkMapaIDEUY = false;
+        this.checkMapaOSM = false;
+        this.checkMapaGoogle = false;
+        break;
+      case 'IDEUY':
+        this.checkMapaCorreo = false;
         this.checkMapaOSM = false;
         this.checkMapaGoogle = false;
         break;
       case 'OSM':
         this.checkMapaCorreo = false;
+        this.checkMapaIDEUY = false;
         this.checkMapaGoogle = false;
         break;
       case 'GOOGLE':
         this.checkMapaCorreo = false;
+        this.checkMapaIDEUY = false;
         this.checkMapaOSM = false;
         break;
     }

@@ -43,10 +43,21 @@ const LayerPadrones = new TileLayer({
     opacity: 0.5
 });
 
+const LayerIDEUY = new TileLayer({
+    source: new TileWms({
+        url: 'https://mapas.ide.uy/geoserver-raster/ortofotos/ows',
+        params: {
+            layers: 'ortofotos:ORTOFOTOS_2019',
+            format: 'image/png'
+        }
+    })
+});
+
 export {
     layerDeviceLocation,
     LayerMapaElCorreo,
     LayerMapaGoogleMaps,
     LayerOSM,
-    LayerPadrones
+    LayerPadrones,
+    LayerIDEUY
 };

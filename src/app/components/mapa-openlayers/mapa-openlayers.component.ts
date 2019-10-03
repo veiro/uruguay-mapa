@@ -55,6 +55,7 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
   @Input() showDeviceLocation = true;
   @Input() showLayerElCorreo = true;
   @Input() showLayerGoogleMaps = true;
+  @Input() showLayerIDEUY = true;
   @Input() showLayerOSM = true;
   @Input() showLayerPadrones = true;
   @Input() showLayersSelector = true;
@@ -69,11 +70,13 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
   layerMapaGoogleMaps =  Layers.LayerMapaGoogleMaps;
   layerOSM =  Layers.LayerOSM;
   layerPadrones = Layers.LayerPadrones;
+  layerIDEUY = Layers.LayerIDEUY;
 
   // Visible Layers
   checkMapaCorreo = this.showLayerElCorreo;
-  checkMapaOSM = !this.showLayerElCorreo && this.showLayerOSM;
-  checkMapaGoogle = !this.showLayerElCorreo && !this.showLayerOSM && this.showLayerGoogleMaps;
+  checkMapaIDEUY = !this.showLayerElCorreo && this.showLayerIDEUY;
+  checkMapaOSM = !this.showLayerElCorreo && !this.showLayerIDEUY && this.showLayerOSM;
+  checkMapaGoogle = !this.showLayerElCorreo && !this.showLayerIDEUY && !this.showLayerOSM && this.showLayerGoogleMaps;
   checkPadron = false;
 
   // Subscriptions
@@ -167,6 +170,9 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
     if (this.showLayerGoogleMaps) {
       layers.push(this.layerMapaGoogleMaps);
     }
+    if (this.showLayerIDEUY) {
+      layers.push(this.layerIDEUY);
+    }
     if (this.showLayerOSM) {
       layers.push(this.layerOSM);
     }
@@ -225,17 +231,25 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
   showBaseLayer() {
     console.log('[mapa-openlayers.component.ts] - showBaseLayer | Start');
     if (this.checkMapaCorreo) {
-      this.layerMapaElCorreo.setVisible(true);
-      this.layerOSM.setVisible(false);
-      this.layerMapaGoogleMaps.setVisible(false);
+        this.layerMapaElCorreo.setVisible(true);
+        this.layerIDEUY.setVisible(false);
+        this.layerOSM.setVisible(false);
+        this.layerMapaGoogleMaps.setVisible(false);
+    } else if (this.checkMapaIDEUY) {
+        this.layerMapaElCorreo.setVisible(false);
+        this.layerIDEUY.setVisible(true);
+        this.layerOSM.setVisible(false);
+        this.layerMapaGoogleMaps.setVisible(false);
     } else if (this.checkMapaOSM) {
-      this.layerMapaElCorreo.setVisible(false);
-      this.layerOSM.setVisible(true);
-      this.layerMapaGoogleMaps.setVisible(false);
+        this.layerMapaElCorreo.setVisible(false);
+        this.layerIDEUY.setVisible(false);
+        this.layerOSM.setVisible(true);
+        this.layerMapaGoogleMaps.setVisible(false);
     } else if (this.checkMapaGoogle) {
-      this.layerMapaElCorreo.setVisible(false);
-      this.layerOSM.setVisible(false);
-      this.layerMapaGoogleMaps.setVisible(true);
+        this.layerMapaElCorreo.setVisible(false);
+        this.layerIDEUY.setVisible(false);
+        this.layerOSM.setVisible(false);
+        this.layerMapaGoogleMaps.setVisible(true);
     }
   }
 
@@ -558,6 +572,7 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
         'inCheckPadron' : this.checkPadron,
         'inCheckMapaGoogle' : this.checkMapaGoogle,
         'inCheckMapaCorreo' : this.checkMapaCorreo,
+        'inCheckMapaIDEUY' : this.checkMapaIDEUY,
         'inCheckMapaOSM' : this.checkMapaOSM
       }
     }).then( modal => {
@@ -567,6 +582,7 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
 
     const  modalCerrado  = await modalCerrar.onWillDismiss();
     this.checkMapaCorreo =  modalCerrado.data.checkMapaCorreo;
+    this.checkMapaIDEUY =  modalCerrado.data.checkMapaIDEUY;
     this.checkMapaOSM =  modalCerrado.data.checkMapaOSM;
     this.checkMapaGoogle = modalCerrado.data.checkMapaGoogle;
     this.checkPadron = modalCerrado.data.checkPadron;
