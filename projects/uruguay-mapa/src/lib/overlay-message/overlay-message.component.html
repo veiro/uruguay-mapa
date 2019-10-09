@@ -1,0 +1,38 @@
+<div class="messageText" >
+    <div style="float: right;"> 
+        <ion-icon slot="end" name="close"  size="small" (click)="cerrarPopUp()" ></ion-icon>
+    </div>
+    <div *ngIf="esObra">
+        <ion-list>
+            <ion-item>
+                <ion-label>Obra</ion-label>
+                <ion-label>{{nroObra }}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-button color="primary" size="small" href="paginas/tabs-obra/(home:resumen/{{nroObra}})" >Detalle</ion-button>
+            </ion-item>
+        </ion-list>
+    </div>
+    <div *ngIf="esIndustria">
+    <ion-list>
+        <ion-item>
+            <ion-text color="primary"> {{denominacion}} {{contribuyente}} </ion-text>
+        </ion-item>
+        <ion-item>
+            <ion-label>Empresa </ion-label>
+            <ion-label >{{empresa }}</ion-label>
+            </ion-item>
+        <ion-item>
+            <ion-label>Aportación </ion-label>
+            <ion-label slot="end">{{aportacion}}</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>Local </ion-label>
+            <ion-label slot="end">{{local}}</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-button color="primary" size="small" href="paginas/tabs/(home:resumen/{{empresa}}/{{contribuyente}}/{{aportacion}}/{{local}})" >Detalle</ion-button>
+        </ion-item>
+    </ion-list>
+    </div>
+</div>
