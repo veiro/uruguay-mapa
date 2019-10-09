@@ -19,9 +19,13 @@ import { CookieService } from 'ng2-cookies';
 import { PopUpOpcionesComponent } from './components/mapa-openlayers/pop-up-opciones/pop-up-opciones.component';
 import { ModalCapas } from './components/mapa-openlayers/modal-capas/modal-capas.component';
 import { ModalClusterComponent } from './components/mapa-openlayers/modal-cluster/modal-cluster.component';
+import { LlamandoDist } from './llamando-dist/llamando-dist.component';
+import { UruguayMapaComponent } from 'uruguay-mapa';
 
 @NgModule({
   declarations: [
+    UruguayMapaComponent,
+        LlamandoDist,
       AppComponent,
       MapaOpenlayersComponent,
       LandingComponent,

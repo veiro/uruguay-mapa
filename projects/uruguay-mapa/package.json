@@ -1,0 +1,8 @@
+{
+  "name": "uruguay-mapa",
+  "version": "0.0.8",
+  "peerDependencies": {
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0"
+  }
+}
