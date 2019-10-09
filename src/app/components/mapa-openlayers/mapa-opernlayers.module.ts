@@ -9,22 +9,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { CookieService } from 'ng2-cookies';
 import { MapaOpenlayersComponent } from './mapa-openlayers.component';
-import { LandingComponent } from 'src/app/landing/landing.component';
 import { OverlayMessageComponent } from './overlay-message/overlay-message.component';
 import { PopUpOpcionesComponent } from './pop-up-opciones/pop-up-opciones.component';
 import { ModalClusterComponent } from './modal-cluster/modal-cluster.component';
 import { ModalCapas } from './modal-capas/modal-capas.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { MapaService } from 'src/app/services/mapa/mapa.service';
-import { ToastService } from 'src/app/services/toast/ToastService';
-import { AppComponent } from 'src/app/app.component';
 
 @NgModule({
   declarations: [      
       MapaOpenlayersComponent,
-      LandingComponent,
       OverlayMessageComponent,
       PopUpOpcionesComponent,
       ModalClusterComponent,
@@ -44,9 +38,6 @@ import { AppComponent } from 'src/app/app.component';
   ],
   providers: [
       Geolocation,
-      CookieService,
-      MapaService,
-      ToastService,
       StatusBar,
       SplashScreen,
       {

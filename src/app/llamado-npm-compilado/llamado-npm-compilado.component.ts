@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { MapaUruguay } from '../../../dist/out-tsc/src/app/components/mapa-openlayers/';
+
+//import { UruguayMapaComponent  } from 'uruguay-mapa';
 
 @Component({
     templateUrl: 'llamado-npm-compilado.component.html'

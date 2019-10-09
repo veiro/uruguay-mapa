@@ -1,1 +1,0 @@
-export * from './src/app/components/mapa-openlayers/mapa-opernlayers.module';

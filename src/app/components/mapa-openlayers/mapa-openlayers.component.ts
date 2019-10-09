@@ -31,9 +31,6 @@ import { Informacion, ModalClusterComponent } from './modal-cluster/modal-cluste
 // Models
 // import { PuntoMapa } from 'src/app/model/punto-mapa';
 
-// Services
-import { MapaService } from './../../services/mapa/mapa.service';
-import { ToastService } from 'src/app/services/toast/ToastService';
 
 @Component({
   selector: 'app-mapa-openlayers',
@@ -101,8 +98,6 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
   markerVectorLayerPosicionSeleccionada: any;
 
   constructor (
-      public _mapService: MapaService,
-      private _toast: ToastService,
       private _geolocation: Geolocation,
       public _modalController: ModalController
   ) {
@@ -294,15 +289,15 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
 
 
   obtenerPuntosIndustria() {
-    this._mapService.obtenerPuntosIndustria().subscribe(
-      response => {
-      this.puntosMapaIndustria = response;
-      this.agregarCapaPuntosIndustria();
-    },
-      error => {
-        this._toast.pushError('Error al obtener puntos de Industria y Comercio');
-      }
-    );
+    // this._mapService.obtenerPuntosIndustria().subscribe(
+    //   response => {
+    //   this.puntosMapaIndustria = response;
+    //   this.agregarCapaPuntosIndustria();
+    // },
+    //   error => {
+    //     console.error('Error al obtener puntos de Industria y Comercio');
+    //   }
+    // );
   }
 
   agregarCapaPuntosObra() {

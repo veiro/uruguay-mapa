@@ -9,29 +9,20 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ToastService } from './services/toast/ToastService';
 import { IonicStorageModule } from '@ionic/storage';
-import { MapaService } from './services/mapa/mapa.service';
-import { MapaOpenlayersComponent } from './components/mapa-openlayers/mapa-openlayers.component';
-import { LandingComponent } from './landing/landing.component';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { CookieService } from 'ng2-cookies';
-import { PopUpOpcionesComponent } from './components/mapa-openlayers/pop-up-opciones/pop-up-opciones.component';
-import { ModalCapas } from './components/mapa-openlayers/modal-capas/modal-capas.component';
-import { ModalClusterComponent } from './components/mapa-openlayers/modal-cluster/modal-cluster.component';
-import { MapaUruguay } from './components/mapa-openlayers/mapa-opernlayers.module';
 import { LlamadoNpmCompiladoCompnent } from './llamado-npm-compilado/llamado-npm-compilado.component';
+//import { UruguayMapaComponent } from 'projects/uruguay-mapa/src/lib/uruguay-mapa.component';
 
 @NgModule({
   declarations: [
+     // UruguayMapaComponent,
       AppComponent,
-      LlamadoNpmCompiladoCompnent
+      LlamadoNpmCompiladoCompnent      
+    
   ],
   entryComponents: [
-
   ],
   imports: [
-      MapaUruguay,
       BrowserModule,
       FormsModule,
       IonicModule.forRoot(),

@@ -1,6 +1,4 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { MapaService } from 'src/app/services/mapa/mapa.service';
-import { ToastService } from 'src/app/services/toast/ToastService';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,9 +14,7 @@ export class PopUpOpcionesComponent implements OnInit {
   urlGoogleMaps = '';
   urlConsultaPadron = '';
 
-  constructor(private _mapService: MapaService,
-              private _toast: ToastService,
-              private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
