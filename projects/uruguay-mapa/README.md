@@ -13,48 +13,24 @@ https://docs.google.com/document/d/1KpvKCahrResW7_p9KeUAEU95FuqRn8A1HLVRShBkIZ0/
 1- Instalar el componente, y algunas dependencias.
 ```
 npm i uruguay-mapa
-
-// ver de aca en mas
-npm install @ionic-native/core@4
-npm install @ionic-native/geolocation
-npm i ionic-angular
-npm i ol
-npm i rxjs-observable
-
 ```
 
 
-3- En el module root hacer el import
+2- En el module root hacer el import
 ```
-import { UruguayMapaComponent, ModalCapas } from 'uruguay-mapa';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { UruguayMapaModule } from 'uruguay-mapa';
 ```
 
-4- Agregar el componente en declarations del module root .
+3- Agregar el componente en declarations del module root .
 ```
-declarations: [
-    UruguayMapaComponent,
-    ModalCapas,
+imports: [
+      UruguayMapaModule,
     ....
 ]
 
 ```
 
-5- En el module tambien en la seccion 
-```
-entryComponents: [
-    ModalCapas,
-    ......
-  ],
-```
-6- En el root module, en la seccion providers agregar:
-```
-providers: [
-    Geolocation,
-    .....
-  ],
-```
-5- Tambien agregar la seccion schemas al module root si no la tenes agregada:
+4- Tambien agregar la seccion schemas al module root si no la tenes agregada:
 
 ```
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
@@ -65,38 +41,12 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 ```
 
 
-6- En resumen el roote module debe quedar similar a:
-
-```
-@NgModule({
-  declarations: [
-    UruguayMapaComponent,
-    ModalCapas,
-    ....
-  ],
-  entryComponents: [
-    ModalCapas
-  ],
-  imports: [
-      .....
-  ],
-  providers: [
-     Geolocation,
-     ......
-  ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  ....
-
-})
-
-```
-
-7- En el html del componente que usa el mapa agregar la version sencilla:
+5- En el html del componente que usa el mapa agregar la version sencilla:
 ```
 <uruguay-mapa> </uruguay-mapa> 
 ```
 
-8- Se puede agregar parametros de configuracion:
+6- Se puede agregar parametros de configuracion:
 ```
 <uruguay-mapa 
 

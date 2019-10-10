@@ -18,7 +18,8 @@ export class PopUpOpcionesComponent implements OnInit {
 
   constructor(//private _mapService: MapaService,
               //private _toast: ToastService,
-              private router: Router) { }
+              //private router: Router
+              ) { }
 
   ngOnInit() {
   }

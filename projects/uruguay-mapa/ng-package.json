@@ -3,5 +3,20 @@
   "dest": "../../dist/uruguay-mapa",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "angular",
+    "ionic-native",
+    "ionic/storage",
+    "cordova-android",
+    "cordova-plugin-device",
+    "cordova-plugin-geolocation",
+    "cordova-plugin-ionic-keyboard",
+    "cordova-plugin-ionic-webview",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-statusbar",
+    "cordova-plugin-whitelist",
+    "ol",
+    "ol-ext"
+  ]
 }

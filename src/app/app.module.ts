@@ -15,22 +15,19 @@ import { LandingComponent } from './landing/landing.component';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CookieService } from 'ng2-cookies';
 import { LlamandoDist } from './llamando-dist/llamando-dist.component';
-import { UruguayMapaComponent, ModalCapas } from 'uruguay-mapa';
+import { UruguayMapaModule } from 'uruguay-mapa';
 @NgModule({
   declarations: [
-      UruguayMapaComponent,       
-      ModalCapas,
-
       LlamandoDist,
       AppComponent,
       LandingComponent 
   ],
   entryComponents: [
-    ModalCapas,
   ],
   imports: [
+      UruguayMapaModule,
       BrowserModule,
-      FormsModule,
+      
       IonicModule.forRoot(),
       IonicStorageModule.forRoot(),
       AppRoutingModule,

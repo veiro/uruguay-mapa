@@ -27,8 +27,7 @@ import { FormsModule } from '@angular/forms';
       ModalClusterComponent
   ],
   imports: [
-    CommonModule,    
-    BrowserModule,
+    CommonModule,  
     FormsModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
@@ -42,6 +41,9 @@ import { FormsModule } from '@angular/forms';
       useClass: IonicRouteStrategy
     }
   ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+  exports: [
+    UruguayMapaComponent
+  ]
 })
 export class UruguayMapaModule { }
