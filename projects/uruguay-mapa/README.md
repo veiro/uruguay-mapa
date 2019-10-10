@@ -14,7 +14,11 @@ Angular cli 7.3.9
 Node 10.16.3
 NPM 6.9.0
 
-## ¿Como usar en Angular?
+## ¿Video de como usar en Angular ?
+
+https://youtu.be/aITfBc4Dz0U
+
+## ¿Como usar en Angular paso a paso?
 
 1- Instalar el componente, y algunas dependencias.
 ```

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Aplicación movil fiscalizador</name>
-    <description>Permite buscar en linea informacion importante para inspectores.</description>
-    <author email="hi@ionicframework" href="https://www.bps.gub.uy/">BPS - ATyR - CSDA - ACERCA</author>
+    <name>Mapa uruguay</name>
+    <description></description>
+    <author email="andres.veiro@gmail.com" href="https://github.com/veiro"></author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
