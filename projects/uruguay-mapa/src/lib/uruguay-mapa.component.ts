@@ -109,20 +109,24 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     console.log('[mapa-openlayers.component.ts] - ngOnInit | Start');
     this._geolocation.getCurrentPosition().then((resp) => {
-      this.ubicacion = resp.coords;
-      this.initMap();
-      this.showSelectedLayers();
-      this.agregarMarcadorPosicionActual();
-
-      this.obtenerPuntosIndustria();
-      this.agregarEventoOnclickConPopUp();
-
-      // Workaround to show map in the first render
-      const that = this;
-      setTimeout(function() { that.map.updateSize(); }, 300);
+      console.log("Voy a inicar con: ", resp.coords);
+      this.inicar(resp.coords);
     }).catch((error) => {
-      console.log('Error getting location', error);
+      console.error("No se puedieron obtener las coordenas", error);
+      this.inicar(this.centerCoordinates);
     });
+  }
+
+  private inicar(coordenadas) {
+    this.ubicacion = coordenadas;
+    this.initMap();
+    this.showSelectedLayers();
+    this.agregarMarcadorPosicionActual();
+    this.obtenerPuntosIndustria();
+    this.agregarEventoOnclickConPopUp();
+    // Workaround to show map in the first render
+    const that = this;
+    setTimeout(function () { that.map.updateSize(); }, 1000);
   }
 
   ngAfterViewInit() {

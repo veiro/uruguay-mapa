@@ -20,7 +20,12 @@ import { FormsModule } from '@angular/forms';
     OverlayMessageComponent,
     PopUpOpcionesComponent,
     ModalClusterComponent,
-    ModalCapas],
+    ModalCapas
+  ],
+  entryComponents: [
+      ModalCapas,
+      ModalClusterComponent
+  ],
   imports: [
     CommonModule,    
     BrowserModule,

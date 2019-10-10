@@ -24,8 +24,8 @@ import { UruguayMapaComponent } from 'uruguay-mapa';
 
 @NgModule({
   declarations: [
-    UruguayMapaComponent,
-        LlamandoDist,
+      UruguayMapaComponent,
+      LlamandoDist,
       AppComponent,
       MapaOpenlayersComponent,
       LandingComponent,

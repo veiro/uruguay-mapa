@@ -5,7 +5,7 @@ import { LlamandoDist } from './llamando-dist/llamando-dist.component';
 
 
 const routes: Routes = [
-  { path: '', component: LandingComponent},
+ // { path: '', component: LandingComponent},
   { path: 'llamando-dist', component: LlamandoDist}
   
 ];
