@@ -16,6 +16,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "uruguay-mapa": [
+        "dist/uruguay-mapa"
+      ],
+      "uruguay-mapa/*": [
+        "dist/uruguay-mapa/*"
+      ]
+    }
   }
 }

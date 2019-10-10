@@ -32,16 +32,17 @@ import { Informacion, ModalClusterComponent } from './modal-cluster/modal-cluste
 // import { PuntoMapa } from 'src/app/model/punto-mapa';
 
 // Services
-import { MapaService } from './../../services/mapa/mapa.service';
-import { ToastService } from 'src/app/services/toast/ToastService';
+//import { MapaService } from './../../services/mapa/mapa.service';
+
+//import { ToastService } from 'src/app/services/toast/ToastService';
 
 @Component({
-  selector: 'app-mapa-openlayers',
-  templateUrl: './mapa-openlayers.component.html',
-  styleUrls: ['./mapa-openlayers.component.css'],
+  selector: 'uruguay-mapa',
+  templateUrl: './uruguay-mapa.component.html',
+  styleUrls: [ './uruguay-mapa.component.css'],
 })
+export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
 
-export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('map') map: Map;
   @ViewChild(OverlayMessageComponent) _overlayMessageComponent: OverlayMessageComponent;
   @ViewChild(PopUpOpcionesComponent) popUpOpcionesComponent: PopUpOpcionesComponent;
@@ -100,34 +101,32 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
   ubicacion: Coordinates;
   markerVectorLayerPosicionSeleccionada: any;
 
-  constructor (
-      public _mapService: MapaService,
-      private _toast: ToastService,
-      private _geolocation: Geolocation,
-      public _modalController: ModalController
-  ) {
-    console.log('[mapa-openlayers.component.ts] - constructor | Start');
-  }
+  constructor( //public _mapService: MapaService,
+                // private _toast: ToastService,
+                private _geolocation: Geolocation,
+                public _modalController: ModalController) { }
 
   ngOnInit() {
     console.log('[mapa-openlayers.component.ts] - ngOnInit | Start');
-    // ToDo: Habría que sacar del then los métodos que iniializan el mapa, y resolver de otra forma la muestra de la posición del usuario.
-    // ToDo: Se se hace eso, si falla la obtanción de la ubicación, el resto anda igual.
     this._geolocation.getCurrentPosition().then((resp) => {
-      this.ubicacion = resp.coords;
-      this.initMap();
-      this.showSelectedLayers();
-      this.agregarMarcadorPosicionActual();
-
-      this.obtenerPuntosIndustria();
-      this.agregarEventoOnclickConPopUp();
-
-      // Workaround to show map in the first render
-      const that = this;
-      setTimeout(function() { that.map.updateSize(); }, 300);
+      console.log("Voy a inicar con: ", resp.coords);
+      this.inicar(resp.coords);
     }).catch((error) => {
-      console.log('Error getting location', error);
+      console.error("No se puedieron obtener las coordenas", error);
+      this.inicar(this.centerCoordinates);
     });
+  }
+
+  private inicar(coordenadas) {
+    this.ubicacion = coordenadas;
+    this.initMap();
+    this.showSelectedLayers();
+    this.agregarMarcadorPosicionActual();
+    this.obtenerPuntosIndustria();
+    this.agregarEventoOnclickConPopUp();
+    // Workaround to show map in the first render
+    const that = this;
+    setTimeout(function () { that.map.updateSize(); }, 1000);
   }
 
   ngAfterViewInit() {
@@ -290,20 +289,18 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
-
-
-
   obtenerPuntosIndustria() {
-    this._mapService.obtenerPuntosIndustria().subscribe(
-      response => {
-      this.puntosMapaIndustria = response;
-      this.agregarCapaPuntosIndustria();
-    },
-      error => {
-        this._toast.pushError('Error al obtener puntos de Industria y Comercio');
-      }
-    );
+    // this._mapService.obtenerPuntosIndustria().subscribe(
+    //   response => {
+    //   this.puntosMapaIndustria = response;
+    //   this.agregarCapaPuntosIndustria();
+    // },
+    //   error => {
+    //     this._toast.pushError('Error al obtener puntos de Industria y Comercio');
+    //   }
+    // );
   }
+
 
   agregarCapaPuntosObra() {
     let featuresPoint: Feature[];
@@ -368,7 +365,6 @@ export class MapaOpenlayersComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.cluster(featuresPoint);
   }
-
   agregarEventoOnclickConPopUp() {
     // pop up para ver datos de los puntos
     this.overlayPopUP = new Overlay({
