@@ -11,7 +11,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastService } from './services/toast/ToastService';
 import { IonicStorageModule } from '@ionic/storage';
 import { MapaService } from './services/mapa/mapa.service';
-import { LandingComponent } from './landing/landing.component';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { LlamandoDist } from './llamando-dist/llamando-dist.component';
 import { UruguayMapaModule } from 'uruguay-mapa';
@@ -19,7 +18,6 @@ import { UruguayMapaModule } from 'uruguay-mapa';
   declarations: [
       LlamandoDist,
       AppComponent,
-      LandingComponent 
   ],
   entryComponents: [
   ],
