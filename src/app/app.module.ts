@@ -13,7 +13,6 @@ import { IonicStorageModule } from '@ionic/storage';
 import { MapaService } from './services/mapa/mapa.service';
 import { LandingComponent } from './landing/landing.component';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { CookieService } from 'ng2-cookies';
 import { LlamandoDist } from './llamando-dist/llamando-dist.component';
 import { UruguayMapaModule } from 'uruguay-mapa';
 @NgModule({
@@ -35,7 +34,6 @@ import { UruguayMapaModule } from 'uruguay-mapa';
   ],
   providers: [
       Geolocation,
-      CookieService,
       MapaService,
       ToastService,
       StatusBar,

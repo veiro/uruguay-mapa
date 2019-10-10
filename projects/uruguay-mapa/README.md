@@ -8,6 +8,12 @@ El paquete es resultado de la implementación del proyecto del curso de Sistemas
 El siguiente link es el informe que se genero para la entraga del trabajo final del curso, en cual se documenta mas del paquete. 
 https://docs.google.com/document/d/1KpvKCahrResW7_p9KeUAEU95FuqRn8A1HLVRShBkIZ0/edit?usp=sharing
 
+## Versiones
+
+Angular cli 7.3.9
+Node 10.16.3
+NPM 6.9.0
+
 ## ¿Como usar en Angular?
 
 1- Instalar el componente, y algunas dependencias.

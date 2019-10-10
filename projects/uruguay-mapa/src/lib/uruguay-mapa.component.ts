@@ -39,7 +39,7 @@ import { Informacion, ModalClusterComponent } from './modal-cluster/modal-cluste
 @Component({
   selector: 'uruguay-mapa',
   templateUrl: './uruguay-mapa.component.html',
-  styleUrls: ['./uruguay-mapa.component.css'],
+  styleUrls: [ './uruguay-mapa.component.css'],
 })
 export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
 

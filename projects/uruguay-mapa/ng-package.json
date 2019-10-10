@@ -5,9 +5,12 @@
     "entryFile": "src/public-api.ts"
   },
   "whitelistedNonPeerDependencies": [
-    "angular",
-    "ionic-native",
-    "ionic/storage",
+    "@ionic-native/core",
+    "@ionic-native/geolocation",
+    "@ionic-native/splash-screen",
+    "@ionic-native/status-bar",
+    "@ionic/angular",
+    "@ionic/storage",
     "cordova-android",
     "cordova-plugin-device",
     "cordova-plugin-geolocation",
