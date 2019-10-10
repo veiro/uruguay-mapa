@@ -5,27 +5,37 @@
 
 ## Como usar?
 
-1. En el modulo de componente hacer el import
+1. En el module de componente hacer el import
 ```
 import { UruguayMapaComponent } from 'uruguay-mapa';
 ```
 
-2. Agregar el componente en declarations del modulo.
+2. Agregar el componente en declarations del module.
 ```
 declarations: [
     UruguayMapaComponent,
-....]
+    ModalCapas,
+    ....
+]
 
 ```
-3. En el html del componente que usa el mapa agregar la version sencilla:
+
+3. En el module tambien en la seccion 
+```
+entryComponents: [
+    ModalCapas,
+    ......
+  ],
+```
+
+4. En el html del componente que usa el mapa agregar la version sencilla:
 ```
 <app-mapa-openlayers style="width: 100%; height: 100%;"></app-mapa-openlayers> 
 ```
 
-4. Se puede agregar parametros de configuracion:
+5. Se puede agregar parametros de configuracion:
 ```
 <app-mapa-openlayers
-        style="width: 100%; height: 100%;"
 
         [centerCoordinates]="{latitude: -34.918195, longitude: -56.166603}"
         [centerInDeviceLocation]="true"
@@ -41,6 +51,7 @@ declarations: [
         [showUserLocationButton]="true"
         [showZoom]="true"
         [showZoomSlider]="true"
+        
 ></app-mapa-openlayers> 
 ```
 

@@ -1,5 +1,4 @@
-import { OverlayMessageComponent } from './components/mapa-openlayers/overlay-message/overlay-message.component';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -12,31 +11,22 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastService } from './services/toast/ToastService';
 import { IonicStorageModule } from '@ionic/storage';
 import { MapaService } from './services/mapa/mapa.service';
-import { MapaOpenlayersComponent } from './components/mapa-openlayers/mapa-openlayers.component';
 import { LandingComponent } from './landing/landing.component';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CookieService } from 'ng2-cookies';
-import { PopUpOpcionesComponent } from './components/mapa-openlayers/pop-up-opciones/pop-up-opciones.component';
-import { ModalCapas } from './components/mapa-openlayers/modal-capas/modal-capas.component';
-import { ModalClusterComponent } from './components/mapa-openlayers/modal-cluster/modal-cluster.component';
 import { LlamandoDist } from './llamando-dist/llamando-dist.component';
-import { UruguayMapaComponent } from 'uruguay-mapa';
-
+import { UruguayMapaComponent, ModalCapas } from 'uruguay-mapa';
 @NgModule({
   declarations: [
-      UruguayMapaComponent,
+      UruguayMapaComponent,       
+      ModalCapas,
+
       LlamandoDist,
       AppComponent,
-      MapaOpenlayersComponent,
-      LandingComponent,
-      OverlayMessageComponent,
-      PopUpOpcionesComponent,
-      ModalClusterComponent,
-      ModalCapas
+      LandingComponent 
   ],
   entryComponents: [
-      ModalCapas,
-      ModalClusterComponent
+    ModalCapas,
   ],
   imports: [
       BrowserModule,
@@ -60,7 +50,8 @@ import { UruguayMapaComponent } from 'uruguay-mapa';
   ],
   bootstrap: [
       AppComponent
-  ]
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 
 export class AppModule { }

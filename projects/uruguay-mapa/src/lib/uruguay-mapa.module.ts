@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { UruguayMapaComponent } from './uruguay-mapa.component';
 import { OverlayMessageComponent } from './overlay-message/overlay-message.component';
 import { PopUpOpcionesComponent } from './pop-up-opciones/pop-up-opciones.component';
@@ -41,6 +41,7 @@ import { FormsModule } from '@angular/forms';
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy
     }
-],
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class UruguayMapaModule { }
