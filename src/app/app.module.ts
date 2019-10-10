@@ -14,6 +14,9 @@ import { MapaService } from './services/mapa/mapa.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { LlamandoDist } from './llamando-dist/llamando-dist.component';
 import { UruguayMapaModule } from 'uruguay-mapa';
+
+
+//import { UruguayMapaModule } from '../../projects/uruguay-mapa/src/lib/uruguay-mapa.module';
 @NgModule({
   declarations: [
       LlamandoDist,
