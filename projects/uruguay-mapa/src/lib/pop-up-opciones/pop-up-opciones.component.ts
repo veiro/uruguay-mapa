@@ -34,6 +34,7 @@ export class PopUpOpcionesComponent implements OnInit {
   }
 
   buscarObrasPorPadron() {
+    console.log("llamo a GetFeatureInfo por el padron: ", this.urlConsultaPadron);
   }
 
 }
