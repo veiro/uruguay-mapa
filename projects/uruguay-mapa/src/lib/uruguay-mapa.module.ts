@@ -27,7 +27,7 @@ import { FormsModule } from '@angular/forms';
       ModalClusterComponent
   ],
   imports: [
-    CommonModule,  
+    CommonModule,
     FormsModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
