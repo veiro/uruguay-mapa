@@ -119,7 +119,7 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
         this.agregarEventoOnclickConPopUp();
         // Workaround to show map in the first render
         const that = this;
-        setTimeout(function () { that.map.updateSize(); }, 1000);
+        setTimeout(that.map.updateSize(), 1000);
     }
 
     ngAfterViewInit() {
@@ -306,28 +306,30 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
 
         let layer = null;
         const iconStyle = customLayer.IconStyle ? customLayer.IconStyle : {};
+
+        function getStyle (feature) {
+            const _style = new style.Style({
+                // ToDo: use parameter IconStyle.Type (CIRCLE, SQUARE, TRIANGLE, STAR, ETC) and RegularShape from Open Layers
+                image: new style.Circle({
+                    radius: iconStyle.Size ? iconStyle.Size : 10,
+                    fill: new style.Fill({
+                        color: iconStyle.BackgroundColor ? iconStyle.BackgroundColor : '#42BF16'
+                    }),
+                    stroke: new style.Stroke({
+                        color: iconStyle.BorderColor ? iconStyle.BorderColor : '#FFF',
+                        width: iconStyle.BorderWidth ? iconStyle.BorderWidth : 2
+                    })
+                })
+            });
+            return [_style];
+        }
+
         if (customLayer.Cluster) {
             const clusterDistance = customLayer.ClusterDistance ? customLayer.ClusterDistance : 50;
             const clusterAnimationDuration = customLayer.ClusterAnimationDuration ? customLayer.ClusterAnimationDuration : 700;
             const layerName = customLayer.LayerName;
             layer = this.createCustomLayerWithCluster(featuresPoint, clusterDistance, clusterAnimationDuration, iconStyle, layerName);
         } else {
-            function getStyle (feature) {
-                const _style = new style.Style({
-                    // ToDo: use parameter IconStyle.Type (CIRCLE, SQUARE, TRIANGLE, STAR, ETC) and RegularShape from Open Layers
-                    image: new style.Circle({
-                        radius: iconStyle.Size ? iconStyle.Size : 10,
-                        fill: new style.Fill({
-                            color: iconStyle.BackgroundColor ? iconStyle.BackgroundColor : '#42BF16'
-                        }),
-                        stroke: new style.Stroke({
-                            color: iconStyle.BorderColor ? iconStyle.BorderColor : '#FFF',
-                            width: iconStyle.BorderWidth ? iconStyle.BorderWidth : 2
-                        })
-                    })
-                });
-                return [_style];
-            }
             layer = new VectorLayer({style: getStyle, source: markers});
         }
         this.map.addLayer(layer);

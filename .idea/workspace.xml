@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2206554c-f803-4eab-a674-e08ddf55f669" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/uruguay-mapa/src/lib/uruguay-mapa.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/projects/uruguay-mapa/src/lib/uruguay-mapa.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/uruguay-mapa/src/lib/uruguay-mapa.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/projects/uruguay-mapa/src/lib/uruguay-mapa.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/llamando-dist/llamando-dist.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/llamando-dist/llamando-dist.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/llamando-dist/llamando-dist.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/llamando-dist/llamando-dist.component.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/dist/" />
@@ -30,30 +25,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/llamando-dist/llamando-dist.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="134" lean-forward="true" selection-start-line="134" selection-end-line="134" />
-              <folding>
-                <element signature="e#320#2214#0" />
-                <element signature="e#2325#4314#0" />
-              </folding>
+            <state relative-caret-position="1275">
+              <caret line="75" column="35" lean-forward="true" selection-start-line="75" selection-start-column="35" selection-end-line="75" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/projects/uruguay-mapa/src/lib/uruguay-mapa.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-229">
-              <caret line="98" lean-forward="true" selection-start-line="98" selection-end-line="98" />
+            <state relative-caret-position="487">
+              <caret line="331" column="16" selection-start-line="331" selection-start-column="16" selection-end-line="331" selection-end-column="16" />
               <folding>
                 <element signature="e#19#113#0" expanded="true" />
                 <element signature="e#241#277#0" expanded="true" />
                 <element signature="e#862#964#0" expanded="true" />
                 <element signature="n#!!block;n#ngOnInit#0;n#UruguayMapaComponent#0" />
-                <element signature="n#!!block;n#inicar#0;n#UruguayMapaComponent#0" />
                 <element signature="n#!!block;n#ngAfterViewInit#0;n#UruguayMapaComponent#0" />
                 <element signature="n#!!block;n#ngOnDestroy#0;n#UruguayMapaComponent#0" />
                 <element signature="n#!!block;n#initMap#0;n#UruguayMapaComponent#0" />
@@ -65,7 +55,6 @@
                 <element signature="n#!!block;n#showInformativeLayers#0;n#UruguayMapaComponent#0" />
                 <element signature="n#!!block;n#addDeviceLocationMarker#0;n#UruguayMapaComponent#0" />
                 <element signature="n#!!block;n#loadCustomLayers#0;n#UruguayMapaComponent#0" />
-                <element signature="n#!!block;n#createCustomLayer#0;n#UruguayMapaComponent#0" />
                 <element signature="n#!!block;n#createCustomLayerWithCluster#0;n#UruguayMapaComponent#0" />
                 <element signature="n#!!block;n#agregarCapaPuntosObra#0;n#UruguayMapaComponent#0" />
                 <element signature="n#!!block;n#agregarEventoOnclickConPopUp#0;n#UruguayMapaComponent#0" />
@@ -85,7 +74,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>featuresPoint</find>
       <find>subscribe</find>
       <find>watchCurrentPostition</find>
       <find>puntosMapaObra</find>
@@ -115,6 +103,7 @@
       <find>capaActual</find>
       <find>mostrarOverlay</find>
       <find>ubicacion</find>
+      <find>work</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -143,8 +132,8 @@
         <option value="$PROJECT_DIR$/src/app/app.module.ts" />
         <option value="$PROJECT_DIR$/projects/uruguay-mapa/src/lib/uruguay-mapa.module.ts" />
         <option value="$PROJECT_DIR$/src/app/llamando-dist/llamando-dist.component.html" />
-        <option value="$PROJECT_DIR$/projects/uruguay-mapa/src/lib/uruguay-mapa.component.ts" />
         <option value="$PROJECT_DIR$/src/app/llamando-dist/llamando-dist.component.ts" />
+        <option value="$PROJECT_DIR$/projects/uruguay-mapa/src/lib/uruguay-mapa.component.ts" />
       </list>
     </option>
   </component>
@@ -280,11 +269,12 @@
       <workItem from="1570051288984" duration="1247000" />
       <workItem from="1570105370056" duration="1313000" />
       <workItem from="1570783849405" duration="8904000" />
+      <workItem from="1570831018756" duration="2297000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50174000" />
+    <option name="totallyTimeSpent" value="52471000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -447,6 +437,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/llamando-dist/llamando-dist.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1275">
+          <caret line="75" column="35" lean-forward="true" selection-start-line="75" selection-start-column="35" selection-end-line="75" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/llamando-dist/llamando-dist.component.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -456,14 +453,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/projects/uruguay-mapa/src/lib/uruguay-mapa.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-229">
-          <caret line="98" lean-forward="true" selection-start-line="98" selection-end-line="98" />
+        <state relative-caret-position="487">
+          <caret line="331" column="16" selection-start-line="331" selection-start-column="16" selection-end-line="331" selection-end-column="16" />
           <folding>
             <element signature="e#19#113#0" expanded="true" />
             <element signature="e#241#277#0" expanded="true" />
             <element signature="e#862#964#0" expanded="true" />
             <element signature="n#!!block;n#ngOnInit#0;n#UruguayMapaComponent#0" />
-            <element signature="n#!!block;n#inicar#0;n#UruguayMapaComponent#0" />
             <element signature="n#!!block;n#ngAfterViewInit#0;n#UruguayMapaComponent#0" />
             <element signature="n#!!block;n#ngOnDestroy#0;n#UruguayMapaComponent#0" />
             <element signature="n#!!block;n#initMap#0;n#UruguayMapaComponent#0" />
@@ -475,7 +471,6 @@
             <element signature="n#!!block;n#showInformativeLayers#0;n#UruguayMapaComponent#0" />
             <element signature="n#!!block;n#addDeviceLocationMarker#0;n#UruguayMapaComponent#0" />
             <element signature="n#!!block;n#loadCustomLayers#0;n#UruguayMapaComponent#0" />
-            <element signature="n#!!block;n#createCustomLayer#0;n#UruguayMapaComponent#0" />
             <element signature="n#!!block;n#createCustomLayerWithCluster#0;n#UruguayMapaComponent#0" />
             <element signature="n#!!block;n#agregarCapaPuntosObra#0;n#UruguayMapaComponent#0" />
             <element signature="n#!!block;n#agregarEventoOnclickConPopUp#0;n#UruguayMapaComponent#0" />
@@ -486,17 +481,6 @@
             <element signature="n#!!block;n#centrarEnUbicacion#0;n#UruguayMapaComponent#0" />
             <element signature="n#!!block;n#mostrarMenu#0;n#UruguayMapaComponent#0" />
             <element signature="n#!!block;n#mostrarModalCluster#0;n#UruguayMapaComponent#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/llamando-dist/llamando-dist.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="134" lean-forward="true" selection-start-line="134" selection-end-line="134" />
-          <folding>
-            <element signature="e#320#2214#0" />
-            <element signature="e#2325#4314#0" />
           </folding>
         </state>
       </provider>
