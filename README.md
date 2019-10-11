@@ -1,5 +1,12 @@
 uruguay-mapa
 ---------
+
+## Versiones
+
+- Angular cli 7.3.9 
+- Node 10.16.3 
+- NPM 6.9.0
+
 ## Como ejecutar?
 
 1- Clonar

@@ -312,26 +312,28 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
             const layerName = customLayer.LayerName;
             layer = this.createCustomLayerWithCluster(featuresPoint, clusterDistance, clusterAnimationDuration, iconStyle, layerName);
         } else {
-            function getStyle (feature) {
-                const _style = new style.Style({
-                    // ToDo: use parameter IconStyle.Type (CIRCLE, SQUARE, TRIANGLE, STAR, ETC) and RegularShape from Open Layers
-                    image: new style.Circle({
-                        radius: iconStyle.Size ? iconStyle.Size : 10,
-                        fill: new style.Fill({
-                            color: iconStyle.BackgroundColor ? iconStyle.BackgroundColor : '#42BF16'
-                        }),
-                        stroke: new style.Stroke({
-                            color: iconStyle.BorderColor ? iconStyle.BorderColor : '#FFF',
-                            width: iconStyle.BorderWidth ? iconStyle.BorderWidth : 2
-                        })
-                    })
-                });
-                return [_style];
-            }
-            layer = new VectorLayer({style: getStyle, source: markers});
+            let styleConstante = this.getStyle (iconStyle)
+            layer = new VectorLayer({style: styleConstante, source: markers});
         }
         this.map.addLayer(layer);
     }
+
+    getStyle (iconStyle) {
+      const _style = new style.Style({
+          // ToDo: use parameter IconStyle.Type (CIRCLE, SQUARE, TRIANGLE, STAR, ETC) and RegularShape from Open Layers
+          image: new style.Circle({
+              radius: iconStyle.Size ? iconStyle.Size : 10,
+              fill: new style.Fill({
+                  color: iconStyle.BackgroundColor ? iconStyle.BackgroundColor : '#42BF16'
+              }),
+              stroke: new style.Stroke({
+                  color: iconStyle.BorderColor ? iconStyle.BorderColor : '#FFF',
+                  width: iconStyle.BorderWidth ? iconStyle.BorderWidth : 2
+              })
+          })
+      });
+      return [_style];
+  }
 
     createCustomLayerWithCluster(_features: Feature[], clusterDistance, clusterAnimationDuration, clusterIconStyle, layerName) {
         const clusterSourcePoint = new source.Cluster({
