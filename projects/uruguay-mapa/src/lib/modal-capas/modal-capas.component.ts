@@ -12,12 +12,14 @@ export class ModalCapas implements OnInit {
 
 
   @Input() inCheckPadron: boolean;
+  @Input() inCheckRoutes: boolean;
   @Input() inCheckMapaCorreo: boolean;
   @Input() inCheckMapaIDEUY: boolean;
   @Input() inCheckMapaOSM: boolean;
   @Input() inCheckMapaGoogle: boolean;
 
   checkPadron: boolean;
+  checkRoutes: boolean;
   checkMapaCorreo: boolean;
   checkMapaIDEUY: boolean;
   checkMapaOSM: boolean;
@@ -27,6 +29,7 @@ export class ModalCapas implements OnInit {
 
   ngOnInit() {
     this.checkPadron = this.inCheckPadron;
+    this.checkRoutes = this.inCheckRoutes;
     this.checkMapaCorreo = this.inCheckMapaCorreo;
     this.checkMapaIDEUY = this.inCheckMapaIDEUY;
     this.checkMapaOSM = this.inCheckMapaOSM;
@@ -37,6 +40,7 @@ export class ModalCapas implements OnInit {
     this.modalCtrl.dismiss({
       'dismissed': true,
       'checkPadron' : this.checkPadron,
+      'checkRoutes' : this.checkRoutes,
       'checkMapaCorreo' :  this.checkMapaCorreo,
       'checkMapaIDEUY' :  this.checkMapaIDEUY,
       'checkMapaOSM' :  this.checkMapaOSM,

@@ -52,6 +52,7 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() showLayerIDEUY = true;
     @Input() showLayerOSM = true;
     @Input() showLayerPadrones = true;
+    @Input() showLayerRoutes = true;
     @Input() showLayersSelector = true;
     @Input() showScaleLine = true;
     @Input() showUserLocationButton = true;
@@ -60,11 +61,12 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Layers
     layerDeviceLocation = Layers.layerDeviceLocation;
+    layerIDEUY = Layers.LayerIDEUY;
     layerMapaElCorreo = Layers.LayerMapaElCorreo;
     layerMapaGoogleMaps =  Layers.LayerMapaGoogleMaps;
     layerOSM =  Layers.LayerOSM;
     layerPadrones = Layers.LayerPadrones;
-    layerIDEUY = Layers.LayerIDEUY;
+    layerRoutes = Layers.LayerRoutes;
 
     // Visible Layers
     checkMapaCorreo = this.showLayerElCorreo;
@@ -72,6 +74,7 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
     checkMapaOSM = !this.showLayerElCorreo && !this.showLayerIDEUY && this.showLayerOSM;
     checkMapaGoogle = !this.showLayerElCorreo && !this.showLayerIDEUY && !this.showLayerOSM && this.showLayerGoogleMaps;
     checkPadron = false;
+    checkRoutes = false;
 
     // Subscriptions
     watchCurrentPosition: any;
@@ -174,6 +177,9 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.showLayerPadrones) {
           layers.push(this.layerPadrones);
         }
+        if (this.showLayerRoutes) {
+          layers.push(this.layerRoutes);
+        }
 
         return layers;
     }
@@ -248,6 +254,7 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
     showInformativeLayers() {
         console.log('[mapa-openlayers.component.ts] - showInformativeLayers | Start');
         this.layerPadrones.setVisible(this.checkPadron);
+        this.layerRoutes.setVisible(this.checkRoutes);
     }
 
     // ToDo: get device location marker from parameter
@@ -552,6 +559,7 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
           component: ModalCapas,
           componentProps: {
             'inCheckPadron' : this.checkPadron,
+            'inCheckRoutes' : this.checkRoutes,
             'inCheckMapaGoogle' : this.checkMapaGoogle,
             'inCheckMapaCorreo' : this.checkMapaCorreo,
             'inCheckMapaIDEUY' : this.checkMapaIDEUY,
@@ -568,6 +576,7 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
         this.checkMapaOSM =  modalCerrado.data.checkMapaOSM;
         this.checkMapaGoogle = modalCerrado.data.checkMapaGoogle;
         this.checkPadron = modalCerrado.data.checkPadron;
+        this.checkRoutes = modalCerrado.data.checkRoutes;
 
         this.showSelectedLayers();
     }
