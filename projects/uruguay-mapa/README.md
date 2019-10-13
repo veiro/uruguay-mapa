@@ -78,6 +78,12 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 ></uruguay-mapa> 
 ```
 
+## Insights
+
+Se siguio la guia https://medium.com/dailyjs/insights-for-npm-packages-1b81a8309a3a
+
+Se puede ver el reporte en https://npm-insights-app.now.sh/uruguay-mapa
+
 ## Repositorio de codigo
 https://github.com/veiro/uruguay-mapa
 

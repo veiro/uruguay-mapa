@@ -13,6 +13,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { RouteReuseStrategy } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { UruguayMapaServices } from './services/uruguay-mapa.services';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FormsModule } from '@angular/forms';
     IonicStorageModule.forRoot(),
   ],
   providers: [
+    UruguayMapaServices,
     Geolocation,
     StatusBar,
     SplashScreen,

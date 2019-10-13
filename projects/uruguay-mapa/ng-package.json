@@ -20,6 +20,7 @@
     "cordova-plugin-statusbar",
     "cordova-plugin-whitelist",
     "ol",
-    "ol-ext"
+    "ol-ext",
+    "npm-insights"
   ]
 }

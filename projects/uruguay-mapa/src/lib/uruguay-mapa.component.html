@@ -2,18 +2,6 @@
 
 <div id="map" ></div>m
 
-<div #popup>
-    <app-overlay-message
-            [puntoMensaje]='puntoOverlayMensaje'
-            (eventoCerrarPopUp)="cerrarPopUp($event)"
-    ></app-overlay-message>
-</div>
-
-<div #popupAcciones>
-    <pop-up-opciones
-            (eventoCerrarPopUp)="cerrarPopUpAcciones($event)"
-    ></pop-up-opciones>
-</div>
 
 <div class="contenedorIconoCapas" [ngClass]="{'displayNone': !this.showLayersSelector}">
     <ion-icon

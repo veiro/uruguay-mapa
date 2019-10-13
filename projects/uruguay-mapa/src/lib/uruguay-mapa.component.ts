@@ -1,5 +1,5 @@
 // General Imports
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ModalController } from '@ionic/angular';
 
@@ -27,6 +27,9 @@ import { OverlayMensaje, OverlayMessageComponent } from './overlay-message/overl
 import { PopUpOpcionesComponent } from './pop-up-opciones/pop-up-opciones.component';
 import { ModalCapas } from './modal-capas/modal-capas.component';
 import { Informacion, ModalClusterComponent } from './modal-cluster/modal-cluster.component';
+import { DataOutOnClick } from './model/data-out-on-click';
+import { HttpClient } from '@angular/common/http';
+import { UruguayMapaServices } from './services/uruguay-mapa.services';
 
 @Component({
   selector: 'uruguay-mapa',
@@ -59,6 +62,9 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() showZoom = true;
     @Input() showZoomSlider = true;
 
+    // Output parameters
+    @Output() eventClick = new EventEmitter<DataOutOnClick>();
+
     // Layers
     layerDeviceLocation = Layers.layerDeviceLocation;
     layerIDEUY = Layers.LayerIDEUY;
@@ -82,28 +88,22 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
     // Data
     ubicacion: Coordinates;
 
-    // To Review
-    puntosMapaObra: Array<any>;
-    geolocation: any;
-    puntoOverlayMensaje: OverlayMensaje = new OverlayMensaje();
-    informacion: Informacion = new Informacion();
-    overlayPopUP: any;
-    overlayPopUPAcciones: any;
-    popupClusterOVerlay: any;
-    checkLocalizar = false;
+    // Global variables    
     view: any;
-    popUpAbierto = false;
-    markerVectorLayerPosicionSeleccionada: any;
+    layerPosicionSeleccionada: any;
+
+   
 
     constructor(
       private _geolocation: Geolocation,
-      public _modalController: ModalController
+      public _modalController: ModalController,
+      private _uruguayMapaServices: UruguayMapaServices
     ) { }
 
     ngOnInit() {
-        console.log('[mapa-openlayers.component.ts] - ngOnInit | Start');
+        //console.log('[mapa-openlayers.component.ts] - ngOnInit | Start');
         this._geolocation.getCurrentPosition().then((resp) => {
-          console.log('Voy a inicar con: ', resp.coords);
+          //console.log('Voy a inicar con: ', resp.coords);
           this.inicar(resp.coords);
         }).catch((error) => {
           console.error('No se puedieron obtener las coordenas', error);
@@ -126,17 +126,16 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngAfterViewInit() {
-        console.log('[mapa-openlayers.component.ts] - ngAfterViewInit | Start');
+        //console.log('[mapa-openlayers.component.ts] - ngAfterViewInit | Start');
     }
 
     ngOnDestroy() {
-        console.log('[mapa-openlayers.component.ts] - ngOnDestroy | Start');
-        // ToDo: Ver si hay alguna otra subscripción para remover.
+        //console.log('[mapa-openlayers.component.ts] - ngOnDestroy | Start');
         this.watchCurrentPosition.unsubscribe();
     }
 
     initMap() {
-        console.log('[mapa-openlayers.component.ts] - initMap | Start');
+        //console.log('[mapa-openlayers.component.ts] - initMap | Start');
         const layers = this.loadLayers();
         const center = this.loadCenter();
         const controls = this.loadControls();
@@ -156,7 +155,7 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     loadLayers(): any[] {
-        console.log('[mapa-openlayers.component.ts] - loadLayers | Start');
+        //console.log('[mapa-openlayers.component.ts] - loadLayers | Start');
         const layers = [];
 
         if (this.showLayerElCorreo) {
@@ -195,7 +194,7 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     loadCenter() {
-        console.log('[mapa-openlayers.component.ts] - loadCenter | Start');
+        //console.log('[mapa-openlayers.component.ts] - loadCenter | Start');
         let latitude = 0;
         let longitude = 0;
 
@@ -231,13 +230,13 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     showSelectedLayers() {
-        console.log('[mapa-openlayers.component.ts] - showSelectedLayers | Start');
+        //console.log('[mapa-openlayers.component.ts] - showSelectedLayers | Start');
         this.showBaseLayer();
         this.showInformativeLayers();
     }
 
     showBaseLayer() {
-        console.log('[mapa-openlayers.component.ts] - showBaseLayer | Start');
+        //console.log('[mapa-openlayers.component.ts] - showBaseLayer | Start');
         if (this.checkMapaCorreo) {
             this.layerMapaElCorreo.setVisible(true);
             this.layerIDEUY.setVisible(false);
@@ -262,14 +261,13 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     showInformativeLayers() {
-        console.log('[mapa-openlayers.component.ts] - showInformativeLayers | Start');
+        //console.log('[mapa-openlayers.component.ts] - showInformativeLayers | Start');
         this.layerPadrones.setVisible(this.checkPadron);
         this.layerRoutes.setVisible(this.checkRoutes);
     }
 
-    // ToDo: get device location marker from parameter
     addDeviceLocationMarker()  {
-        console.log('[mapa-openlayers.component.ts] - addDeviceLocationMarker | Start');
+        //console.log('[mapa-openlayers.component.ts] - addDeviceLocationMarker | Start');
         if (this.showDeviceLocation) {
           this.layerDeviceLocation.getSource().clear();
           const userLocationIconStyle = new style.Style({
@@ -301,16 +299,16 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     loadCustomLayers() {
-        console.log('[mapa-openlayers.component.ts] - loadCustomLayers | Start');
+        //console.log('[mapa-openlayers.component.ts] - loadCustomLayers | Start');
         if (this.customLayers && this.customLayers.length > 0) {
           this.customLayers.forEach(customLayer => this.createCustomLayer(customLayer));
         }
     }
 
     createCustomLayer(customLayer) {
-        console.log('[mapa-openlayers.component.ts] - createCustomLayer | Start');
-        console.log('[mapa-openlayers.component.ts] - createCustomLayer | customLayer:');
-        console.log(customLayer);
+        //console.log('[mapa-openlayers.component.ts] - createCustomLayer | Start');
+        //console.log('[mapa-openlayers.component.ts] - createCustomLayer | customLayer:');
+        //console.log(customLayer);
 
         const featuresPoint: Feature[] = [];
 
@@ -408,119 +406,75 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-    agregarCapaPuntosObra() {
-        let featuresPoint: Feature[];
-         featuresPoint = [];
+   
 
-        const iconStyle = new style.Style({
-          image: new style.Icon( ({
-            anchor: [0.5, 46],
-            anchorXUnits: 'fraction',
-            anchorYUnits: 'pixels',
-            src: 'assets/icon/iconoObra.png'
-          }))
-        });
+    agregarEventoOnclickConPopUp() {     
 
-        this.puntosMapaObra.forEach( x => {
-          const punto = new Feature({
-            geometry: new geom.Point(fromLonLat([parseFloat(x.longitud), parseFloat(x.latitud)])),
-            Tipo: x.tipoPunto,
-            Obra: x.nroObra,
-            style: iconStyle
-            });
-            punto.setStyle(iconStyle);
-          featuresPoint.push( punto );
-        });
-
-        const markers = new Vector({
-          features: featuresPoint
-        });
-
-        const markerVectorLayer = new VectorLayer({
-          source: markers,
-
-        });
-
-        this.map.addLayer(markerVectorLayer);
-    }
-
-    agregarEventoOnclickConPopUp() {
-        // pop up para ver datos de los puntos
-        this.overlayPopUP = new Overlay({
-          element: this.popup.nativeElement ,
-          positioning: 'bottom-center',
-          stopEvent: false,
-          offset: [0, -50]
-        });
-
-        this.map.addOverlay(this.overlayPopUP);
-
-        // pop up para ver el modal de seleccion de capas
-        this.overlayPopUPAcciones = new Overlay({
-          element: this.popupAcciones.nativeElement ,
-          positioning: 'bottom-center',
-          stopEvent: false,
-          offset: [0, -50]
-        });
-
-        this.map.addOverlay(this.overlayPopUPAcciones);
-
-        this.map.on('dblclick', (evt) => {
-          // es un click en cualquier lado entonces abro pop up de opciones
-          this.popUpAbierto = true;
-          this.agregarMarcadorPosicionSeleccionada(evt.coordinate);
-          this.map.getView().animate({center: evt.coordinate, duration: 500});
-          this.overlayPopUPAcciones.setPosition(evt.coordinate);
-          const puntoGoogle = transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
-
-          // obtengo la url para consultar el padron
-          let urlConsutaPadron = this.layerPadrones.getSource().getGetFeatureInfoUrl(
-            evt.coordinate, this.view.getResolution(), 'EPSG:3857',
-            {'INFO_FORMAT': 'application/json'});
-            urlConsutaPadron = urlConsutaPadron + '&QUERY_LAYERS=parcelario_urbano%2Cparcelario_rural';
-
-          this.popUpOpcionesComponent.cargarPopUp(puntoGoogle, urlConsutaPadron);
-          this.map.addOverlay(this.overlayPopUPAcciones);
-        });
-
-        // display popup on click
         this.map.on('singleclick', (evt) => {
+          let infoOut = new DataOutOnClick();
+
+          infoOut.coordinates = transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
+          
+          let promiseInfoPadron = this.obtenerInfoPadron(evt, infoOut);          
+
           const sFeature = this.map.forEachFeatureAtPixel(evt.pixel, (_sFeature => _sFeature));
 
           if (sFeature && sFeature.getProperties().features.length === 1) {
-            const featureSeleccionada = sFeature.getProperties().features[0];
+            const featureSeleccionada = sFeature.getProperties().features[0];  
+            // centro el mapa en la feature          
             const coordinates = featureSeleccionada.getGeometry().getCoordinates();
             this.map.getView().animate({center: coordinates, duration: 500});
-            const id = sFeature.getId();
-            const propiedades = featureSeleccionada.getProperties();
-            this.puntoOverlayMensaje.id = id;
-            this.puntoOverlayMensaje.propiedades = propiedades;
-            this.overlayPopUP.setPosition(coordinates);
-            this.map.addOverlay(this.overlayPopUP);
-            this.overlayPopUP.setVisible(true);
-            this._overlayMessageComponent.cargarPopUp();
+
+            infoOut.featureSelected = featureSeleccionada.getProperties();
           }
           if (sFeature && sFeature.getProperties().features.length > 1) {
             // toco en un cluster
-            this.informacion.puntos = sFeature.values_.features;
-            this.mostrarModalCluster(this.informacion);
+             sFeature.values_.features.forEach(element => {
+              element.values_.geometry=null;
+              infoOut.clusterFeatureSelected.push(element.values_);
+             });
           }
+
+          promiseInfoPadron.then(
+            (val) => {              
+              this.eventClick.emit(infoOut);
+            }
+          ,
+            (err) => {
+              this.eventClick.emit(infoOut);
+            }
+          );
+          
         });
     }
 
-    cerrarPopUp(cierro) {
-        this.map.removeOverlay(this.overlayPopUP);
-    }
+  private obtenerInfoPadron(evt: any, infoOut: DataOutOnClick) {
+    let promise = new Promise((resolve, reject) => {
+      // calculo la url del serivicio wms de padrones con la funcion getFeatureInfo
+      let urlConsutaPadron = this.layerPadrones.getSource().getGetFeatureInfoUrl(evt.coordinate, this.view.getResolution(), 'EPSG:3857', { 'INFO_FORMAT': 'application/json' });
+      urlConsutaPadron = urlConsutaPadron + '&QUERY_LAYERS=parcelario_urbano%2Cparcelario_rural';
 
-    cerrarPopUpAcciones(cierro) {
-        this.map.removeOverlay(this.overlayPopUPAcciones);
-        this.popUpAbierto = false;
-        this.map.removeLayer(this.markerVectorLayerPosicionSeleccionada);
-    }
+      //llamo con un get
+      this._uruguayMapaServices.obtenerDatosDelPadron(urlConsutaPadron).subscribe(res => {
+        //dependiendo el resultado aviso
+        if (res.features[0]) {
+          infoOut.padron = res.features[0].properties;
+          resolve();
+        }
+      }, err => {
+        console.error("Error al obtner la informacion del padron", err);
+        reject();
+      });
+    });
+    return promise;
+  }
 
-    cerrarPopUpCluster() {
-        this.map.removeOverlay(this.popupClusterOVerlay);
-    }
+    // no se usa pero capaz que algun dia se quiere.  
+    markOnThePositionSelected(evt){
+      
+      this.agregarMarcadorPosicionSeleccionada(evt.coordinate);
+      this.map.getView().animate({center: evt.coordinate, duration: 500});
+    }   
 
     agregarMarcadorPosicionSeleccionada(coord)  {
         let featuresPoint: Feature[];
@@ -547,20 +501,14 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
           features: featuresPoint
         });
 
-        this.markerVectorLayerPosicionSeleccionada = new VectorLayer({
+        this.layerPosicionSeleccionada = new VectorLayer({
           source: markers,
         });
 
-        this.map.addLayer(this.markerVectorLayerPosicionSeleccionada);
+        this.map.addLayer(this.layerPosicionSeleccionada);
     }
 
-    centrarEnUbicacion() {
-        this.checkLocalizar = !this.checkLocalizar;
-        this.map.getView().animate({center: fromLonLat([this.ubicacion.longitude, this.ubicacion.latitude]), duration: 500});
-        setTimeout(() => {
-        this.checkLocalizar = !this.checkLocalizar;
-        }, 500);
-    }
+   
 
     async mostrarMenu() {
         let modalCerrar = null;

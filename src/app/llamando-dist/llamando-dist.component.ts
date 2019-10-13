@@ -136,4 +136,9 @@ export class LlamandoDist {
         this.customLayers.push(layerUniversidades);
         this.customLayers.push(layerTiendaInglesa);
     }
+
+
+    alertar(event){
+        alert(JSON.stringify(event));
+    }
 }
