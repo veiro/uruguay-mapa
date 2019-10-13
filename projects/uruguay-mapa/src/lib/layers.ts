@@ -63,7 +63,6 @@ const LayerRoutes = new TileLayer({
     })
 });
 
-
 export {
     layerDeviceLocation,
     LayerMapaElCorreo,

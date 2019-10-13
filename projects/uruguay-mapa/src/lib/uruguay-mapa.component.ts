@@ -69,10 +69,10 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
     layerRoutes = Layers.LayerRoutes;
 
     // Visible Layers
-    checkMapaCorreo = this.showLayerElCorreo;
-    checkMapaIDEUY = !this.showLayerElCorreo && this.showLayerIDEUY;
-    checkMapaOSM = !this.showLayerElCorreo && !this.showLayerIDEUY && this.showLayerOSM;
-    checkMapaGoogle = !this.showLayerElCorreo && !this.showLayerIDEUY && !this.showLayerOSM && this.showLayerGoogleMaps;
+    checkMapaCorreo = false;
+    checkMapaIDEUY = false;
+    checkMapaOSM = false;
+    checkMapaGoogle = false;
     checkPadron = false;
     checkRoutes = false;
 
@@ -161,15 +161,25 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.showLayerElCorreo) {
           layers.push(this.layerMapaElCorreo);
+          this.checkMapaCorreo = true;
+        }
+        if (this.showLayerIDEUY) {
+            layers.push(this.layerIDEUY);
+            if (!this.showLayerElCorreo) {
+                this.checkMapaIDEUY = true;
+            }
+        }
+        if (this.showLayerOSM) {
+            layers.push(this.layerOSM);
+            if (!this.showLayerElCorreo && !this.showLayerIDEUY) {
+                this.checkMapaOSM = true;
+            }
         }
         if (this.showLayerGoogleMaps) {
           layers.push(this.layerMapaGoogleMaps);
-        }
-        if (this.showLayerIDEUY) {
-          layers.push(this.layerIDEUY);
-        }
-        if (this.showLayerOSM) {
-          layers.push(this.layerOSM);
+            if (!this.showLayerElCorreo && !this.showLayerIDEUY && !this.showLayerOSM) {
+                this.checkMapaGoogle = true;
+            }
         }
         if (this.showDeviceLocation) {
           layers.push(this.layerDeviceLocation);
@@ -558,11 +568,17 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
         await this._modalController.create({
           component: ModalCapas,
           componentProps: {
+            'inShowPadron' : this.showLayerPadrones,
             'inCheckPadron' : this.checkPadron,
+            'inShowRoutes' : this.showLayerRoutes,
             'inCheckRoutes' : this.checkRoutes,
+            'inShowMapaGoogle' : this.showLayerGoogleMaps,
             'inCheckMapaGoogle' : this.checkMapaGoogle,
+            'inShowMapaCorreo' : this.showLayerElCorreo,
             'inCheckMapaCorreo' : this.checkMapaCorreo,
+            'inShowMapaIDEUY' : this.showLayerIDEUY,
             'inCheckMapaIDEUY' : this.checkMapaIDEUY,
+            'inShowMapaOSM' : this.showLayerOSM,
             'inCheckMapaOSM' : this.checkMapaOSM
           }
         }).then( modal => {

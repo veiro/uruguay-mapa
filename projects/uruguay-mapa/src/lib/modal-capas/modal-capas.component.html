@@ -14,19 +14,19 @@
           <h3>Principales</h3>
         </ion-item-divider>
       
-        <ion-item>
+        <ion-item *ngIf="this.inShowMapaCorreo">
           <ion-label>Mapa El Correo</ion-label>
           <ion-checkbox [(ngModel)]="checkMapaCorreo" (click)="marcarCapaBase('CORREO')" ></ion-checkbox>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="this.inShowMapaIDEUY">
             <ion-label>Mapa IDEUY</ion-label>
             <ion-checkbox [(ngModel)]="checkMapaIDEUY" (click)="marcarCapaBase('IDEUY')" ></ion-checkbox>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="this.inShowMapaOSM">
             <ion-label>Mapa OSM</ion-label>
             <ion-checkbox [(ngModel)]="checkMapaOSM" (click)="marcarCapaBase('OSM')" ></ion-checkbox>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="this.inShowMapaGoogle">
           <ion-label>Mapa Google</ion-label>
           <ion-checkbox [(ngModel)]="checkMapaGoogle" (click)="marcarCapaBase('GOOGLE')" ></ion-checkbox>
         </ion-item>
@@ -38,12 +38,12 @@
           <h3>Secundarias</h3>
         </ion-item-divider>
       
-        <ion-item>
+        <ion-item *ngIf="this.inShowPadron">
             <ion-label>Padrones </ion-label>
             <ion-checkbox [(ngModel)]="checkPadron" (click)="mostrarApicarCambios()" ></ion-checkbox>
         </ion-item>
 
-        <ion-item>
+        <ion-item *ngIf="this.inShowRoutes">
             <ion-label>Rutas </ion-label>
             <ion-checkbox [(ngModel)]="checkRoutes" (click)="mostrarApicarCambios()" ></ion-checkbox>
         </ion-item>

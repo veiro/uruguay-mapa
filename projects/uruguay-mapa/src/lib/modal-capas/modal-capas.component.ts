@@ -11,11 +11,17 @@ export class ModalCapas implements OnInit {
   constructor(private modalCtrl: ModalController) { }
 
 
+  @Input() inShowPadron: boolean;
   @Input() inCheckPadron: boolean;
+  @Input() inShowRoutes: boolean;
   @Input() inCheckRoutes: boolean;
+  @Input() inShowMapaCorreo: boolean;
   @Input() inCheckMapaCorreo: boolean;
+  @Input() inShowMapaIDEUY: boolean;
   @Input() inCheckMapaIDEUY: boolean;
+  @Input() inShowMapaOSM: boolean;
   @Input() inCheckMapaOSM: boolean;
+  @Input() inShowMapaGoogle: boolean;
   @Input() inCheckMapaGoogle: boolean;
 
   checkPadron: boolean;
