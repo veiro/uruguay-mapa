@@ -8,6 +8,10 @@ El paquete es resultado de la implementación del proyecto del curso de Sistemas
 El siguiente link es el informe que se genero para la entraga del trabajo final del curso, en cual se documenta mas del paquete. 
 https://docs.google.com/document/d/1KpvKCahrResW7_p9KeUAEU95FuqRn8A1HLVRShBkIZ0/edit?usp=sharing
 
+## Demo online
+
+https://uruguay-mapa-como-usar.herokuapp.com/
+
 ## Versiones
 
 Angular cli 7.3.9
