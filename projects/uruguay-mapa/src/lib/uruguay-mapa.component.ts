@@ -91,6 +91,7 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
     // Global variables    
     view: any;
     layerPosicionSeleccionada: any;
+    checkLocalizar = false;
 
    
 
@@ -559,4 +560,13 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
 
         await modalCerrar.onWillDismiss();
     }
+
+    centrarEnUbicacion() {
+      //llamado desde el html
+      this.checkLocalizar = !this.checkLocalizar;
+      this.map.getView().animate({center: fromLonLat([this.ubicacion.longitude, this.ubicacion.latitude]), duration: 500});
+      setTimeout(() => {
+      this.checkLocalizar = !this.checkLocalizar;
+      }, 500);
+  }
 }

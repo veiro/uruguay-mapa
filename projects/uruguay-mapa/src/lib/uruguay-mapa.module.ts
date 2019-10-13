@@ -14,6 +14,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { UruguayMapaServices } from './services/uruguay-mapa.services';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,12 +29,14 @@ import { UruguayMapaServices } from './services/uruguay-mapa.services';
       ModalClusterComponent
   ],
   imports: [
+    HttpClientModule,
     CommonModule,
     FormsModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
   ],
   providers: [
+    HttpClient,
     UruguayMapaServices,
     Geolocation,
     StatusBar,
