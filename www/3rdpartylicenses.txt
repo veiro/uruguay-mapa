@@ -115,9 +115,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
-ng2-cookies
-MIT
-
 ol
 BSD-2-Clause
 
@@ -473,6 +470,8 @@ If the Work includes a "NOTICE" text file as part of its distribution, then any 
 
 END OF TERMS AND CONDITIONS
 
+
+uruguay-mapa
 
 zone.js
 MIT

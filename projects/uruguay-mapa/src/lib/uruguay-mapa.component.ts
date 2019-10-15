@@ -439,6 +439,7 @@ export class UruguayMapaComponent implements OnInit, AfterViewInit, OnDestroy {
           promiseInfoPadron.then(
             (val) => {              
               this.eventClick.emit(infoOut);
+              console.log("TCL: UruguayMapaComponent -> agregarEventoOnclickConPopUp -> infoOut", JSON.stringify(infoOut))
             }
           ,
             (err) => {

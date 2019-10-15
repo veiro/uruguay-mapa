@@ -1,7 +1,8 @@
 ﻿{
-  "short_name": "Mapa uruguay",
-  "name": "Mapa uruguay",
+  "short_name": "Prueba libreria mapa",
+  "name": "Prueba libreria mapa",
   "start_url": "index.html",
-  "display": "standalone"
-  
+  "display": "standalone",
+  "icons": [
+  ]
 }
