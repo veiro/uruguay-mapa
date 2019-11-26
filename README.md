@@ -43,5 +43,10 @@ https://youtu.be/QW1JbcMwHB8
 ##  Tareas
 https://trello.com/b/ybtDfbPd/uruguay-mapa
 
+
+## Insights
+https://npm-stat.com/charts.html?package=uruguay-mapa&from=2019-01-01&to=2019-11-25
+
 ## Deploy npm
-https://medium.com/@insomniocode/creando-una-librer%C3%ADa-angular-y-subi%C3%A9ndola-a-npm-f78d212e8e71
+https://medium.com/@insomniocode/creando-una-librería-angular-y-subiéndola-a-npm-f78d212e8e71
+https://angular.io/guide/creating-libraries#using-your-own-library-in-apps

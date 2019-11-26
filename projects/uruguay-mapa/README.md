@@ -1,12 +1,13 @@
 
 # Uruguay Mapa
 
-## Origen del proyecto
+## Quien deberia usar?
+Requisitos:
+* Desarrolladores web que trabajen con Angular y no esten familiarizados con el stack de sistemas de información geografica y los estandares que se utilizan.
+* El proyecto que estoy trabajando es sencillo, mostrar puntos con algun mapa base.
 
-El paquete es resultado de la implementación del proyecto del curso de Sistemas de Información Geograficos Empresariales dicatado en UDELAR - CPAP el año 2019.
-
-El siguiente link es el informe que se genero para la entraga del trabajo final del curso, en cual se documenta mas del paquete. 
-https://docs.google.com/document/d/1KpvKCahrResW7_p9KeUAEU95FuqRn8A1HLVRShBkIZ0/edit?usp=sharing
+# Quien NO deberia usar?
+* El proyecto que estoy trabajando tiene como componente central el mapa, se va a mostrar varias capas de datos y debe ser personalizable desde los botones hasta que servicios utiliza.
 
 ## Demo online
 
@@ -82,18 +83,39 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 ></uruguay-mapa> 
 ```
 
-## Insights
+## Funcionalidades
 
-Se siguio la guia https://medium.com/dailyjs/insights-for-npm-packages-1b81a8309a3a
+Cada funcionalidad tiene asociado un parametro de entrada, en la siguient tabla se lista los parametros, valor por defecto y un link a la documentacion.
 
-Se puede ver el reporte en https://npm-insights-app.now.sh/uruguay-mapa
+| Parametro | Valor por defecto | Documentación |
+| ------ | ------ |------ |
+| centerCoordinates | latitude: -32.659237,  longitude: -56.082402 | [wiki-centrado-en-coordenadas](https://github.com/veiro/uruguay-mapa/wiki/Centrado-en-coordenadas) |
+| centerInDeviceLocation | true | [en-proceso](google) |
+| customLayers | null | [en-proceso](google) |
+| initialZoom | 7 | [en-proceso](google)  |
+| showDeviceLocation | true | [en-proceso](google)  |
+| showLayerElCorreo | true | [en-proceso](google)  |
+| showLayerIDEUY | true | [en-proceso](google)  |
+| showLayerOSM | true | [en-proceso](google)  |
+| showLayerPadrones | true | [en-proceso](google)  |
+| showLayerRoutes | true | [en-proceso](google) |
+| showLayersSelector | true | [en-proceso](google)  |
+| showScaleLine | true | [en-proceso](google) |
+| showUserLocationButton | true | [en-proceso](google)  |
+| showZoom | true | [en-proceso](google)  |
+| showZoomSlider | true | [en-proceso](google)  |
 
-## Repositorio de codigo
+## Repositorio de codigo 
 https://github.com/veiro/uruguay-mapa
 
 ## Tareas a futuro
 https://trello.com/b/ybtDfbPd/uruguay-mapa
 
-## Deploy npm
-https://medium.com/@insomniocode/creando-una-librería-angular-y-subiéndola-a-npm-f78d212e8e71
-https://angular.io/guide/creating-libraries#using-your-own-library-in-apps
+## Insights
+https://npm-stat.com/charts.html?package=uruguay-mapa&from=2019-01-01&to=2019-11-25
+
+## Origen del proyecto
+El paquete es resultado de la implementación del proyecto del curso de Sistemas de Información Geograficos Empresariales dicatado en UDELAR - CPAP el año 2019.
+El siguiente link es el informe que se genero para la entraga del trabajo final del curso, en cual se documenta mas del paquete. 
+https://docs.google.com/document/d/1KpvKCahrResW7_p9KeUAEU95FuqRn8A1HLVRShBkIZ0/edit?usp=sharing
+
